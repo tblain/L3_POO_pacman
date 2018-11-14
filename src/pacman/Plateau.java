@@ -1,10 +1,10 @@
 package pacman;
 
 public class Plateau {
-    public Case[][] plateauTab;
+    public Case[][] plateauTab; // tableau de cases
 
-    public int nbLignes;
-    public int nbColonnes;
+    public int nbLignes;   // nombre de ligne du tableau
+    public int nbColonnes; // nombre de colonnes du tableau
 
     public Plateau(int[][] tab, int nbLignes, int nbColonnes) {
         this.nbLignes = nbLignes;
@@ -13,7 +13,7 @@ public class Plateau {
         this.genererPlateau(tab);
     }
 
-    private void genererPlateau(int[][] tab) {
+    private void genererPlateau(int[][] tab) { // on remplit le plateau avec les cases correspondant au tableau valeur
         int cell;
 
         for (int i = 0; i < nbLignes; i++) {
