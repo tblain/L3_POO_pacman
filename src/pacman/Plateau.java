@@ -54,4 +54,7 @@ public class Plateau {
     public Case getCase(int x, int y){
         return plateauTab[x][y];
     }
+    public Case getCase(Coordonnees coord){
+        return plateauTab[coord.x][coord.y];
+    }
 }
