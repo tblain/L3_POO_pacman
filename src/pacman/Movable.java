@@ -24,23 +24,28 @@ public abstract class Movable implements Runnable{
     public Coordonnees getNextPosition()
     {
         Coordonnees nextPos = this.pos;
+
         switch (this.dir)
         {
             case UP:
             {
-                nextPos.x++;
+                nextPos.y--;
+                break;
             }
             case DOWN:
             {
-                nextPos.x--;
+                nextPos.y++;
+                break;
             }
             case LEFT:
             {
-                nextPos.y--;
+                nextPos.x--;
+                break;
             }
             case RIGHT:
             {
-                nextPos.y++;
+                nextPos.x++;
+                break;
             }
 
         }

@@ -28,6 +28,7 @@ public class Pacman extends Movable {
 
     @Override
     public void run() {
+        System.out.println("  pos : " + pos.getX() + " | " + pos.getY());
         // On récupère la case sur laquelle pacman est
         Case cas = this.plateau.getCase(this.pos);
 
@@ -77,7 +78,9 @@ public class Pacman extends Movable {
         Coordonnees nextMove = this.getNextPosition();
         if(!this.plateau.getCase(nextMove).mur && this.plateau.getCase(nextMove).passage)
         {
-            this.pos = nextMove;
+            System.out.println("    next move : " + nextMove.getX() + " | " + nextMove.getY());
+            pos = nextMove;
+            System.out.println("    next move : " + nextMove.getX() + " | " + nextMove.getY());
         }
     }
 
