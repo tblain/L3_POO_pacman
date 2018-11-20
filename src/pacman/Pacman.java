@@ -1,8 +1,5 @@
 package pacman;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-import javafx.print.PageLayout;
-
 import java.util.ArrayList;
 
 public class Pacman extends Movable {
@@ -77,7 +74,7 @@ public class Pacman extends Movable {
         }
 
         // On met à jour la position si pas de mur devant nous
-        Coordonnees nextMove = this.getNextMove();
+        Coordonnees nextMove = this.getNextPosition();
         if(!this.plateau.getCase(nextMove).mur && this.plateau.getCase(nextMove).passage)
         {
             this.pos = nextMove;

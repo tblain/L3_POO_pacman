@@ -21,7 +21,7 @@ public abstract class Movable implements Runnable{
      * Intelligence des movables, pour Les Monsters celà correspond à leurs IA
      * @return
      */
-    public Coordonnees getNextMove()
+    public Coordonnees getNextPosition()
     {
         Coordonnees nextPos = this.pos;
         switch (this.dir)
