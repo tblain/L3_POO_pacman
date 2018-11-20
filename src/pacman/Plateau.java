@@ -10,6 +10,7 @@ public class Plateau {
         this.nbLignes = nbLignes;
         this.nbColonnes = nbColonnes;
 
+        plateauTab = new Case[nbLignes][nbColonnes];
         this.genererPlateau(tab);
     }
 

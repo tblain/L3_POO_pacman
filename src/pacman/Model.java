@@ -5,6 +5,7 @@ import java.util.Observable;
 public class Model extends Observable implements Runnable{
     public Plateau plateau;
     public int score;
+    public 
 
     public Model() {
     }
