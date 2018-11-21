@@ -11,33 +11,7 @@ public class Model extends Observable implements Runnable{
     public ArrayList<Monster> monsters;
 
     public Model() {
-      int[][] tabInit = { {0, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 3, 3, 3, 3,  1,  3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 4, 1, 1, 3, 1, 1, 1, 3,  3,  3, 1, 1, 1, 3, 1, 1, 4, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 3, 3, 3, 3,  1,  3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 3, 1, 1, 3, 1, 3, 1, 1,  1,  1, 1, 3, 1, 3, 1, 1, 3, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 1, 3, 3, 3,  1,  3, 3, 3, 1, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 1, 1, 1, 3, 1, 1, 1, 0,  1,  0, 1, 1, 1, 3, 1, 1, 1, 1, 0},
-                          {0, 0, 0, 0, 1, 3, 1, 0, 0, 0,  0,  0, 0, 0, 1, 3, 1, 0, 0, 0, 0},
-                          {0, 1, 1, 1, 1, 3, 1, 0, 1, 1,  0,  1, 1, 0, 1, 3, 1, 1, 1, 1, 1},
-
-                          {0, 0, 0, 0, 0, 3, 0, 0, 1, 0,  0,  0, 1, 0, 0, 3, 0, 0, 0, 0, 0},
-
-                          {0, 1, 1, 1, 1, 3, 1, 0, 1, 1,  1,  1, 1, 0, 1, 3, 1, 1, 1, 1, 1},
-                          {0, 0, 0, 0, 1, 3, 1, 0, 0, 0,  0,  0, 0, 0, 1, 3, 1, 0, 0, 0, 0},
-                          {0, 1, 1, 1, 1, 3, 1, 0, 1, 1,  1,  1, 1, 0, 1, 3, 1, 1, 1, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 3, 3, 3, 3,  1,  3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 3, 1, 1, 3, 1, 1, 1, 3,  1,  3, 1, 1, 1, 3, 1, 1, 3, 1, 0},
-                          {0, 1, 4, 3, 1, 3, 3, 3, 3, 3,  2,  3, 3, 3, 3, 3, 1, 3, 4, 1, 0},
-                          {0, 1, 1, 3, 1, 3, 1, 1, 1, 1,  1,  1, 1, 3, 1, 3, 1, 3, 1, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 1, 3, 3, 3,  1,  3, 3, 3, 1, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 3, 1, 1, 1, 1, 1, 1, 3,  1,  1, 1, 1, 1, 1, 1, 1, 3, 1, 0},
-                          {0, 1, 3, 3, 3, 3, 3, 3, 3, 3,  3,  3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
-                          {0, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                        };
-
-
-      plateau = new Plateau(tabInit, 21, 21);
+      plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
 
       pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
@@ -52,9 +26,9 @@ public class Model extends Observable implements Runnable{
 
       pacman.init(monsters);
 
-      monster1.init(pacman);
-      monster2.init(pacman);
-      monster3.init(pacman);
+      monster1.init(pacman, monsters);
+      monster2.init(pacman, monsters);
+      monster3.init(pacman, monsters);
 
     }
 
@@ -62,41 +36,30 @@ public class Model extends Observable implements Runnable{
     public void run() {
         while(pacman.alive)
         {
-          System.out.println("model run");
-          System.out.println("  pacman run");
-          pacman.run();
-          for(Monster m : this.monsters)
-          {
-              m.run();
-          }
-          System.out.println("  pacman end : " + pacman.pos.getX() + " " + pacman.pos.getY());
-            //pacman.pos.setX(8);
-          setChanged();
-            System.out.println("  setchanged end");
-            notifyObservers();
-          System.out.println("  notify end");
+            // pacman.run();
 
-          System.out.println("model end");
+
+             for(Monster m : this.monsters)
+                          {
+                              m.run();
+                          }
+
+            setChanged();
+
+            notifyObservers();
+
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("|||||||||||||||||||||||");
-        System.out.println("pacman mort");
         setChanged();
         notifyObservers();
     }
 
 
-    public Plateau getPlateau() {
-        return plateau;
-    }
-
-    public void setPlateau(Plateau plateau) {
-        this.plateau = plateau;
-    }
+    public Plateau getPlateau() { return plateau; }
 
     public int getScore() {
         return score;
@@ -110,15 +73,8 @@ public class Model extends Observable implements Runnable{
         return pacman;
     }
 
-    public void setPacman(Pacman pacman) {
-        this.pacman = pacman;
-    }
-
     public ArrayList<Monster> getMonsters() {
         return monsters;
     }
 
-    public void setMonsters(ArrayList<Monster> monsters) {
-        this.monsters = monsters;
-    }
 }

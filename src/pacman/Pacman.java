@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Pacman extends Movable {
     protected ArrayList<Monster> monsters;
-    protected boolean init;
     protected int score;
 
     // Variable qui correspond au temps restant sous l'état super pac gomme, décrémenté à chaque tic
@@ -15,7 +14,6 @@ public class Pacman extends Movable {
     public Pacman(Coordonnees pos, Plateau plateau)
     {
         super(pos, plateau, Direction.LEFT);
-        this.init = false;
         this.remainingTimeForSuperPacGomme = 0;
         this.score = 0;
     }
@@ -23,12 +21,11 @@ public class Pacman extends Movable {
     public void init(ArrayList<Monster> monsters)
     {
         this.monsters = monsters;
-        this.init = true;
     }
 
     @Override
     public void run() {
-        System.out.println("  pos : " + pos.getX() + " | " + pos.getY());
+
         // On récupère la case sur laquelle pacman est
         Case cas = this.plateau.getCase(this.pos);
 
@@ -60,35 +57,32 @@ public class Pacman extends Movable {
                 monster.alive = false;
                 this.monsters.remove(monster);
                 this.score += Constantes.POINT_ON_EAT_MONSTER;
-                // On enlève la super Gomme de la map
-                cas.setSuperGomme(false);
             }
         }
         // TODO
 
-        // On gère le cas où on peut mange un gomme
+        // On gère le cas où on peut manger une gomme
         if(cas.isGomme())
         {
             this.score += Constantes.POINT_PAC_GOMME;
             // On enlève la gomme
             cas.setGomme(false);
+            plateau.setCase(cas);
+        }
+
+        // On gère le cas où l'on peut manger une super gomme
+        if(cas.isSuperGomme())
+        {
+            this.remainingTimeForSuperPacGomme = Constantes.TIME_SUPER_PAC_GOMME;
+            cas.setSuperGomme(false);
+            plateau.setCase(cas);
         }
 
         // On met à jour la position si pas de mur devant nous
         Coordonnees nextMove = this.getNextPosition();
-        if(!this.plateau.getCase(nextMove).mur && this.plateau.getCase(nextMove).passage)
+        if(!this.plateau.getCase(nextMove).isMur())
         {
             pos = nextMove;
         }
-    }
-
-    public void setDirection(Direction dir)
-    {
-        this.dir = dir;
-    }
-
-    public Direction getDirection()
-    {
-        return this.dir;
     }
 }

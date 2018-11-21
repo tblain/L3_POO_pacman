@@ -15,10 +15,8 @@ public abstract class Movable implements Runnable{
         this.dir = dir;
     }
 
-    //public abstract void run(Plateau plateau, ArrayList<Movable> list);
-
     /**
-     * Intelligence des movables, pour Les Monsters celà correspond à leurs IA
+     * retourne la position + 1 grâce à la direction
      * @return
      */
     public Coordonnees getNextPosition()

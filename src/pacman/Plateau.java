@@ -58,4 +58,12 @@ public class Plateau {
     public Case getCase(Coordonnees coord){
         return plateauTab[coord.x][coord.y];
     }
+    public void setCase(int x, int y, Case cas){
+        this.plateauTab[x][y] = cas;
+    }
+
+    public void setCase(Case cas)
+    {
+        this.plateauTab[cas.coordonnees.x][cas.coordonnees.y] = cas;
+    }
 }

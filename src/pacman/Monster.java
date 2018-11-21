@@ -4,17 +4,27 @@ import java.util.ArrayList;
 
 public class Monster extends Movable {
     protected Pacman pacman;
-    protected boolean init;
+
+    // Savoir où ils sont pour ne pas aller sur les mêmes cases qu'eux
+    protected ArrayList<Monster> othersMonsters;
 
     public Monster(Coordonnees pos, Plateau plateau)
     {
         super(pos, plateau, Direction.RIGHT);
-        this.init = false;
+        this.othersMonsters = new ArrayList<>();
     }
     
-    public void init(Pacman pacman) {
+    public void init(Pacman pacman, ArrayList<Monster> othersMonsters) {
         this.pacman = pacman;
-        this.init = true;
+
+        for(Monster mst : othersMonsters)
+        {
+            // On garde seulement les autres monstres et pas nous
+            if(mst != this)
+            {
+                this.othersMonsters.add(mst);
+            }
+        }
     }
 
     @Override
@@ -31,9 +41,17 @@ public class Monster extends Movable {
         }
         // On met à jour notre position
 
-        this.pos = this.getAI();
+        Coordonnees nextPossibleCoord = this.getAI();
+        if(nextPossibleCoord != null)
+        {
+            this.pos = nextPossibleCoord;
+        }
     }
 
+    /**
+     * Retourne les coordonnées de la position suivante, null si aucune position possible
+     * @return
+     */
     public Coordonnees getAI() {
         Coordonnees nextCoord = this.getNextPosition();
         ArrayList<Coordonnees> availableCoord = getAvailableCoord();
@@ -69,9 +87,13 @@ public class Monster extends Movable {
             }
 
             // On choisi aléatoirement entre la ou les directions restantes
-            // donc entre 0 et availableCoord.size()
-            int nombreAleatoire = (int) (Math.random() * ((availableCoord.size())));
-            res = availableCoord.get(nombreAleatoire);
+            // donc entre 0 et availableCoord.size() si il en reste
+            if(availableCoord.size() > 0)
+            {
+                int nombreAleatoire = (int) (Math.random() * ((availableCoord.size())));
+
+                res = availableCoord.get(nombreAleatoire);
+            }
 
         }
 
@@ -88,25 +110,25 @@ public class Monster extends Movable {
 
         // On test les 4 possibilités
         Case caseToTest = this.plateau.getCase(this.pos.x++,this.pos.y);
-        if(!caseToTest.isMur())
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
         {
             availableCoord.add(caseToTest.coordonnees);
         }
 
         caseToTest = this.plateau.getCase(this.pos.x--, this.pos.y);
-        if(!caseToTest.isMur())
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
         {
             availableCoord.add(caseToTest.coordonnees);
         }
 
         caseToTest = this.plateau.getCase(this.pos.x, this.pos.y++);
-        if(!caseToTest.isMur())
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
         {
             availableCoord.add(caseToTest.coordonnees);
         }
 
         caseToTest = this.plateau.getCase(this.pos.x, this.pos.y--);
-        if(!caseToTest.isMur())
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
         {
             availableCoord.add(caseToTest.coordonnees);
         }
@@ -139,5 +161,23 @@ public class Monster extends Movable {
             }
         }
         return position;
+    }
+
+    /**
+     * Ne pas tester avec la case courante de notre monstre car renverra false
+     * @param Case cas
+     * @return boolean
+     */
+    public boolean monsterOnThisCase(Case cas)
+    {
+        boolean monsterOnThisCase = false;
+        for(Monster mst : this.othersMonsters)
+        {
+            if(mst.pos.equal(cas))
+            {
+                monsterOnThisCase = true;
+            }
+        }
+        return monsterOnThisCase;
     }
 }

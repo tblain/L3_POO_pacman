@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
@@ -27,36 +28,34 @@ import static java.lang.Thread.sleep;
 
 
 public class Vue extends Application  {
+    public Model m;
+    public BorderPane border;
+    public GridPane gPane;
 
 
     @Override
     public void start(Stage primaryStage) {
 
         // gestion du placement (permet de placer le champ Text affichage en haut, et GridPane gPane au centre)
-        BorderPane border = new BorderPane();
+        border = new BorderPane();
 
         // permet de placer les diffrents boutons dans une grille
-        GridPane gPane = new GridPane();
+        gPane = new GridPane();
 
-        Model m = new Model();
+        // On instancie le model
+        m = new Model();
 
         // la vue observe les "update" du "?", et réalise les mises à jour graphiques
 
-        m.addObserver(new Observer() {
+        m.addObserver((o, arg) -> {
 
-            @Override
-            public void update(Observable o, Object arg) {
-                System.out.println("    update");
-                Platform.runLater(() -> {
-                    afficherPlateau((Model)o, gPane);
-                });
-                System.out.println("    fin update");
-            }
+            Platform.runLater(this::afficherPlateau);
+            System.out.println("    fin update");
         });
 
         //gPane.setGridLinesVisible(true);
 
-        afficherPlateau(m, gPane);
+        afficherPlateau();
 
         border.setCenter(gPane);
 
@@ -66,31 +65,31 @@ public class Vue extends Application  {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Platform.runLater(m);
-        Task<Void> task = new Task<Void>() {
+
+        /*Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 m.run();
                 return null;
             }
         };
-        new Thread(task).start();
+        new Thread(task).start();*/
+        m.run();
+
     }
 
-    public void afficherPlateau(Model m, GridPane gPane) {
+    public void afficherPlateau() {
         gPane.getChildren().clear();
-        int column = 21;
-        int row = 21;
+        int column = Map1.COLUMN;
+        int row = Map1.ROW;
         Plateau p = m.getPlateau();
         Pacman pacman = m.getPacman();
         ArrayList<Monster> monsters = m.getMonsters();
 
         for (int i = 0; i < row; i++)
         {
-            System.out.println("        i : " + i);
             for (int j = 0; j < column; j++)
             {
-                System.out.println("        j : " + j);
                 Case c = p.getCase(i, j);
                 String stringCase = "";
 
