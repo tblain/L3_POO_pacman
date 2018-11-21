@@ -65,6 +65,10 @@ public class Model extends Observable implements Runnable{
           System.out.println("model run");
           System.out.println("  pacman run");
           pacman.run();
+          for(Monster m : this.monsters)
+          {
+              m.run();
+          }
           System.out.println("  pacman end : " + pacman.pos.getX() + " " + pacman.pos.getY());
             //pacman.pos.setX(8);
           setChanged();

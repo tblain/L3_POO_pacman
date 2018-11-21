@@ -2,6 +2,8 @@ package pacman;
 
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -24,13 +26,13 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Thread.sleep;
 
 
-public class Vue extends Application {
+public class Vue extends Application  {
 
 
     @Override
     public void start(Stage primaryStage) {
 
-        // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
+        // gestion du placement (permet de placer le champ Text affichage en haut, et GridPane gPane au centre)
         BorderPane border = new BorderPane();
 
         // permet de placer les diffrents boutons dans une grille
@@ -45,7 +47,9 @@ public class Vue extends Application {
             @Override
             public void update(Observable o, Object arg) {
                 System.out.println("    update");
-                afficherPlateau(m, gPane);
+                Platform.runLater(() -> {
+                    afficherPlateau((Model)o, gPane);
+                });
                 System.out.println("    fin update");
             }
         });
@@ -62,16 +66,19 @@ public class Vue extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        ExecutorService exec = Executors.newSingleThreadExecutor();
-        exec.submit(m);
-        System.out.println("couilles");
-
-        // m.run();
+        // Platform.runLater(m);
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                m.run();
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     public void afficherPlateau(Model m, GridPane gPane) {
-        System.out.println("        afficher plateau");
-        //gPane.getChildren().clear();
+        gPane.getChildren().clear();
         int column = 21;
         int row = 21;
         Plateau p = m.getPlateau();
@@ -101,16 +108,14 @@ public class Vue extends Application {
                 }
 
                 final Text text = new Text(stringCase);
-                System.out.println("gpane " + gPane);
                 gPane.add(text, j, i);
-                System.out.println("fsfsfsdffsfdsfsfsdfdsfidskflsdh fldskfhdsklfjd");
             }
         }
         for (Monster monster : monsters) {
             gPane.add(new Text("M"), monster.pos.getX(), monster.pos.getY());
         }
         gPane.add(new Text("C"), pacman.pos.getX(), pacman.pos.getY());
-        System.out.println("        afficher plateau end");
+        System.out.println("    PLateau chargé  ");
 
     }
 

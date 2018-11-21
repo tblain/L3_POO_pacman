@@ -78,9 +78,7 @@ public class Pacman extends Movable {
         Coordonnees nextMove = this.getNextPosition();
         if(!this.plateau.getCase(nextMove).mur && this.plateau.getCase(nextMove).passage)
         {
-            System.out.println("    next move : " + nextMove.getX() + " | " + nextMove.getY());
             pos = nextMove;
-            System.out.println("    next move : " + nextMove.getX() + " | " + nextMove.getY());
         }
     }
 
