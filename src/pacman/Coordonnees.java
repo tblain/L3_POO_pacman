@@ -50,4 +50,9 @@ public class Coordonnees {
         }
         return false;
     }
+
+    @Override
+    protected Object clone() {
+        return new Coordonnees(x, y);
+    }
 }

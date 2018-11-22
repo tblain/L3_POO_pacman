@@ -60,17 +60,23 @@ public class Monster extends Movable {
         // Check si notre position suivante en fonction de la direction est dans availableCoord, si oui
         // y aller => donc continuer dans la même direction
         boolean sameDir = false;
+        boolean lastDir = false;
+
         for(Coordonnees coord : availableCoord)
         {
             if(coord.equals(nextCoord))
             {
                 sameDir = true;
+            } else if (coord.equals(getLastPosition())) {
+                lastDir = true;
             }
+
         }
 
         if(sameDir)
         {
             res = nextCoord;
+            System.out.println("    same dir : " + pos.x + " | y : " + pos.y);
         }
         // sinon choisir aléatoirement un autre direction
         // en privilègiant celle qui ne nous feras pas retourner sur nos pas
@@ -93,10 +99,31 @@ public class Monster extends Movable {
                 int nombreAleatoire = (int) (Math.random() * ((availableCoord.size())));
 
                 res = availableCoord.get(nombreAleatoire);
+                System.out.println("    available coord");
+            } else if(lastDir) {
+                res = lastPosition;
+                switch(this.dir) {
+                    case UP: {
+                        dir = Direction.DOWN;
+                        break;
+                    }
+                    case DOWN: {
+                        dir = Direction.UP;
+                        break;
+                    }
+                    case LEFT: {
+                        dir = Direction.RIGHT;
+                        break;
+                    }
+                    case RIGHT: {
+                        dir = Direction.LEFT;
+                        break;
+                    }
+                }
             }
 
         }
-
+        //System.out.println("x : " + res.getX() + " | y : " + res.getY());
         return res;
     }
 
@@ -107,29 +134,34 @@ public class Monster extends Movable {
     public ArrayList<Coordonnees> getAvailableCoord()
     {
         ArrayList<Coordonnees> availableCoord = new ArrayList<>();
+        System.out.println("test available coord : " + pos.x + " | y : " + pos.y);
 
         // On test les 4 possibilités
-        Case caseToTest = this.plateau.getCase(this.pos.x++,this.pos.y);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
+        Case caseToTest = this.plateau.getCase(this.pos.x + 1,this.pos.y);
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getX() + 1 < 21)
         {
+            System.out.println("    right  x : " + (pos.x + 1) + " | y : " + pos.y);
             availableCoord.add(caseToTest.coordonnees);
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x--, this.pos.y);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
+        caseToTest = this.plateau.getCase(this.pos.x - 1, this.pos.y);
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getX() - 1 >= 0)
         {
+            System.out.println("    left  x : " + (pos.x - 1) + " | y : " + pos.y);
             availableCoord.add(caseToTest.coordonnees);
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y++);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
+        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y + 1);
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getY() + 1 < 21)
         {
+            System.out.println("    down  x : " + pos.x + " | y : " + (pos.y + 1));
             availableCoord.add(caseToTest.coordonnees);
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y--);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest))
+        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y - 1);
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getY() - 1 >= 0)
         {
+            System.out.println("    up  x : " + pos.x + " | y : " + (pos.y-1));
             availableCoord.add(caseToTest.coordonnees);
         }
 
@@ -137,27 +169,32 @@ public class Monster extends Movable {
     }
 
 
+
     public Coordonnees getLastPosition()
     {
-        Coordonnees position = this.pos;
+        Coordonnees position = (Coordonnees) this.getPos().clone();
 
         switch(this.dir)
         {
             case UP:
             {
-                position.y--;
+                position.y++;
+                break;
             }
             case DOWN:
             {
-                position.y++;
+                position.y--;
+                break;
             }
             case LEFT:
             {
                 position.x++;
+                break;
             }
             case RIGHT:
             {
                 position.x--;
+                break;
             }
         }
         return position;

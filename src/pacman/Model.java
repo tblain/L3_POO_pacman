@@ -37,22 +37,25 @@ public class Model extends Observable implements Runnable{
         while(pacman.alive)
         {
             // pacman.run();
-
-
-             for(Monster m : this.monsters)
+             int i = 0;
+            System.out.println("-----------------------");
+             for(Monster mst : this.monsters)
                           {
-                              m.run();
+                              mst.run();
+                              System.out.println("m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
+                              i++;
                           }
 
-            setChanged();
+             setChanged();
 
-            notifyObservers();
+             notifyObservers();
 
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+             try {
+                 TimeUnit.SECONDS.sleep(1);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+
         }
         setChanged();
         notifyObservers();

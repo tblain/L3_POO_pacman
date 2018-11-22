@@ -15,6 +15,14 @@ public abstract class Movable implements Runnable{
         this.dir = dir;
     }
 
+    public Coordonnees getPos() {
+        return pos;
+    }
+
+    public void setPos(Coordonnees pos) {
+        this.pos = pos;
+    }
+
     /**
      * retourne la position + 1 grâce à la direction
      * @return
