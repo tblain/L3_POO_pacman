@@ -29,28 +29,28 @@ public abstract class Movable implements Runnable{
      */
     public Coordonnees getNextPosition()
     {
-        Coordonnees nextPos = this.pos;
+        Coordonnees nextPos = (Coordonnees)this.pos.clone();
 
         switch (this.dir)
         {
             case UP:
             {
-                nextPos.y--;
+                nextPos.setY(nextPos.getY()-1);
                 break;
             }
             case DOWN:
             {
-                nextPos.y++;
+                nextPos.setY(nextPos.getY()+1);
                 break;
             }
             case LEFT:
             {
-                nextPos.x--;
+                nextPos.setX(nextPos.getX()-1);
                 break;
             }
             case RIGHT:
             {
-                nextPos.x++;
+                nextPos.setX(nextPos.getX()+1);
                 break;
             }
 

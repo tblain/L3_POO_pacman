@@ -66,15 +66,14 @@ public class Vue extends Application  {
         primaryStage.show();
 
 
-        /*Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 m.run();
                 return null;
             }
         };
-        new Thread(task).start();*/
-        m.run();
+        new Thread(task).start();
 
     }
 

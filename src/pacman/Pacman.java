@@ -82,7 +82,7 @@ public class Pacman extends Movable {
         Coordonnees nextMove = this.getNextPosition();
         if(!this.plateau.getCase(nextMove).isMur())
         {
-            pos = nextMove;
+            this.pos = nextMove;
         }
     }
 }

@@ -17,13 +17,13 @@ public class Plateau {
     private void genererPlateau(int[][] tab) { // on remplit le plateau avec les cases correspondant au tableau valeur
         int cell;
 
-        for (int i = 0; i < nbLignes; i++) {
-
-            for (int j = 0; j < nbColonnes; j++) {
-                cell = tab[i][j];
+        for(int x = 0; x < nbColonnes; x++)
+        {
+            for(int y = 0; y < nbLignes; y++)
+            {
+                cell = tab[x][y];
                 // 1 = mur, 2 = passage, 3 = gomme, 4 = superGomme
-                plateauTab[i][j] = new Case(new Coordonnees(i, j), cell == 1, cell == 2 || cell == 3 || cell == 4, cell == 3, cell == 4);
-
+                plateauTab[x][y] = new Case(new Coordonnees(x, y), cell == 1, (cell == 2 || cell == 3 || cell == 4), cell == 3, cell == 4);
             }
         }
     }
@@ -56,7 +56,7 @@ public class Plateau {
         return plateauTab[x][y];
     }
     public Case getCase(Coordonnees coord){
-        return plateauTab[coord.x][coord.y];
+        return plateauTab[coord.getX()][coord.getY()];
     }
     public void setCase(int x, int y, Case cas){
         this.plateauTab[x][y] = cas;
@@ -64,6 +64,6 @@ public class Plateau {
 
     public void setCase(Case cas)
     {
-        this.plateauTab[cas.coordonnees.x][cas.coordonnees.y] = cas;
+        this.plateauTab[cas.coordonnees.getX()][cas.coordonnees.getY()] = cas;
     }
 }

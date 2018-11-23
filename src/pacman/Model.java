@@ -1,6 +1,8 @@
 package pacman;
 
+import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 
@@ -36,16 +38,19 @@ public class Model extends Observable implements Runnable{
     public void run() {
         while(pacman.alive)
         {
-            // pacman.run();
+            int o = Map1.MAP[9][10]; // Le spawn du milieu des fantom
+            int in = Map1.MAP[10][9]; // devrait etre un mur
+
+            //pacman.run();
              int i = 0;
             System.out.println("-----------------------");
-             for(Monster mst : this.monsters)
-                          {
-                              mst.run();
-                              System.out.println("m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
-                              i++;
-                          }
-
+             /*for(Monster mst : this.monsters)
+             {
+                 System.out.println("BEFORE m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
+                 mst.run();
+                 System.out.println("AFTER m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
+                 i++;
+             }*/
              setChanged();
 
              notifyObservers();

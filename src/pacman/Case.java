@@ -19,24 +19,12 @@ public class Case {
         return coordonnees;
     }
 
-    public void setCoordonnees(Coordonnees coordonnees) {
-        this.coordonnees = coordonnees;
-    }
-
     public boolean isMur() {
         return mur;
     }
 
-    public void setMur(boolean mur) {
-        this.mur = mur;
-    }
-
     public boolean isPassage() {
         return passage;
-    }
-
-    public void setPassage(boolean passage) {
-        this.passage = passage;
     }
 
     public boolean isGomme() {

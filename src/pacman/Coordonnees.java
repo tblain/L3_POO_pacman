@@ -1,12 +1,17 @@
 package pacman;
 
-public class Coordonnees {
-    public int x;
-    public int y;
+public class Coordonnees implements Cloneable{
+    private int x;
+    private int y;
 
     public Coordonnees(int _x, int _y) {
         x = _x;
         y = _y;
+    }
+
+    public String toString()
+    {
+        return "x = " + this.x + " || y = " + this.y;
     }
 
     public int getX() {
@@ -25,7 +30,8 @@ public class Coordonnees {
         this.y = y;
     }
 
-    public boolean equal(Object o)
+    @Override
+    public boolean equals(Object o)
     {
         if(this == o)
         {
@@ -51,8 +57,13 @@ public class Coordonnees {
         return false;
     }
 
-    @Override
-    protected Object clone() {
-        return new Coordonnees(x, y);
+    public Object clone(){
+        Object o = null;
+        try {
+            o = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return o;
     }
 }

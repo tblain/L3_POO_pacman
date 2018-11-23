@@ -40,12 +40,13 @@ public class Monster extends Movable {
             }
         }
         // On met à jour notre position
-
         Coordonnees nextPossibleCoord = this.getAI();
         if(nextPossibleCoord != null)
         {
+            this.dir = this.getDirection(nextPossibleCoord);
             this.pos = nextPossibleCoord;
         }
+
     }
 
     /**
@@ -60,23 +61,19 @@ public class Monster extends Movable {
         // Check si notre position suivante en fonction de la direction est dans availableCoord, si oui
         // y aller => donc continuer dans la même direction
         boolean sameDir = false;
-        boolean lastDir = false;
 
         for(Coordonnees coord : availableCoord)
         {
             if(coord.equals(nextCoord))
             {
                 sameDir = true;
-            } else if (coord.equals(getLastPosition())) {
-                lastDir = true;
             }
-
         }
 
         if(sameDir)
         {
             res = nextCoord;
-            System.out.println("    same dir : " + pos.x + " | y : " + pos.y);
+            System.out.println("    same dir : " + pos.getX() + " | y : " + pos.getY());
         }
         // sinon choisir aléatoirement un autre direction
         // en privilègiant celle qui ne nous feras pas retourner sur nos pas
@@ -84,11 +81,12 @@ public class Monster extends Movable {
         {
             // On enlève la coordonnée nous faisant revenir sur notre position précédente
             Coordonnees lastPosition = this.getLastPosition();
-            for(Coordonnees coord: availableCoord)
+            for(int i = 0; i < availableCoord.size(); i++)
             {
-                if(coord.equals(lastPosition))
+                if(availableCoord.get(i).equals(lastPosition))
                 {
-                    availableCoord.remove(coord);
+                    availableCoord.remove(i);
+                    break;
                 }
             }
 
@@ -99,8 +97,10 @@ public class Monster extends Movable {
                 int nombreAleatoire = (int) (Math.random() * ((availableCoord.size())));
 
                 res = availableCoord.get(nombreAleatoire);
-                System.out.println("    available coord");
-            } else if(lastDir) {
+
+            }
+            // Si on a pas de choix possible (aller à gauche ou à droite) on retourne sur nos pas
+            else {
                 res = lastPosition;
                 switch(this.dir) {
                     case UP: {
@@ -134,70 +134,144 @@ public class Monster extends Movable {
     public ArrayList<Coordonnees> getAvailableCoord()
     {
         ArrayList<Coordonnees> availableCoord = new ArrayList<>();
-        System.out.println("test available coord : " + pos.x + " | y : " + pos.y);
+        Case caseToTest;
+        //System.out.println("test available coord : " + pos.getX() + " | y : " + pos.getY());
 
-        // On test les 4 possibilités
-        Case caseToTest = this.plateau.getCase(this.pos.x + 1,this.pos.y);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getX() + 1 < 21)
+        // On test les 4 possibilités avec des try catch ou cas ou caseToTest serait demandé en index 21 par exemple
+        try{
+            caseToTest = this.plateau.getCase(this.pos.getX() + 1,this.pos.getY());
+            if(this.isAvailable(caseToTest))
+            {
+                availableCoord.add(caseToTest.coordonnees);
+            }
+        }catch (ArrayIndexOutOfBoundsException e)
         {
-            System.out.println("    right  x : " + (pos.x + 1) + " | y : " + pos.y);
-            availableCoord.add(caseToTest.coordonnees);
+            System.out.println("ArrayIndexOutOfBoundsException "+e.getMessage());
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x - 1, this.pos.y);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getX() - 1 >= 0)
+        try{
+            caseToTest = this.plateau.getCase(this.pos.getX() - 1, this.pos.getY());
+            if(this.isAvailable(caseToTest))
+            {
+                availableCoord.add(caseToTest.coordonnees);
+            }
+        }catch (ArrayIndexOutOfBoundsException e)
         {
-            System.out.println("    left  x : " + (pos.x - 1) + " | y : " + pos.y);
-            availableCoord.add(caseToTest.coordonnees);
+            System.out.println("ArrayIndexOutOfBoundsException " +e.getMessage());
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y + 1);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getY() + 1 < 21)
+        try{
+            caseToTest = this.plateau.getCase(this.pos.getX(), this.pos.getY() + 1);
+            if(this.isAvailable(caseToTest))
+            {
+                availableCoord.add(caseToTest.coordonnees);
+            }
+        }catch (ArrayIndexOutOfBoundsException e)
         {
-            System.out.println("    down  x : " + pos.x + " | y : " + (pos.y + 1));
-            availableCoord.add(caseToTest.coordonnees);
+            System.out.println("ArrayIndexOutOfBoundsException "+e.getMessage());
         }
 
-        caseToTest = this.plateau.getCase(this.pos.x, this.pos.y - 1);
-        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getY() - 1 >= 0)
+        try{
+            caseToTest = this.plateau.getCase(this.pos.getX(), this.pos.getY() - 1);
+            if(this.isAvailable(caseToTest))
+            {
+                availableCoord.add(caseToTest.coordonnees);
+            }
+        }catch (ArrayIndexOutOfBoundsException e)
         {
-            System.out.println("    up  x : " + pos.x + " | y : " + (pos.y-1));
-            availableCoord.add(caseToTest.coordonnees);
+            System.out.println("ArrayIndexOutOfBoundsException " + e.getMessage());
         }
 
+
+        for(Coordonnees coord : availableCoord)
+        {
+            System.out.println(coord);
+        }
         return availableCoord;
+    }
+
+
+    public boolean isAvailable(Case caseToTest)
+    {
+        if(!caseToTest.isMur() && !this.monsterOnThisCase(caseToTest) && pos.getY() > 0)
+        {
+            //System.out.println("    up  x : " + pos.getX() + " | y : " + (pos.getY()-1));
+            return true;
+        }
+        return false;
     }
 
 
 
     public Coordonnees getLastPosition()
     {
-        Coordonnees position = (Coordonnees) this.getPos().clone();
+        Coordonnees position = (Coordonnees) this.pos.clone();
 
         switch(this.dir)
         {
             case UP:
             {
-                position.y++;
+                position.setY(position.getY()+1);
                 break;
             }
             case DOWN:
             {
-                position.y--;
+                position.setY(position.getY()-1);
                 break;
             }
             case LEFT:
             {
-                position.x++;
+                position.setX(position.getX()+1);
                 break;
             }
             case RIGHT:
             {
-                position.x--;
+                position.setX(position.getX()-1);
                 break;
             }
         }
         return position;
+    }
+
+    /**
+     * On donne la direction en fonction des Coordonnées données et de notre position actuelle
+     * @param coord
+     * @return
+     */
+    public Direction getDirection(Coordonnees in_coord)
+    {
+        // On obtient un vecteur
+        Coordonnees coord = new Coordonnees(in_coord.getX() - this.pos.getX(), in_coord.getY() - this.pos.getY());
+        Direction dir = null;
+
+        // UP et DOWN sont inversés à cause des indexes du tableau de jeu
+        // on monte avec index - 1 et descend avec index + 1
+
+        // Si on se dirige vers le haut (UP)
+        if(coord.getY() < 0)
+        {
+            dir = Direction.UP;
+        }
+
+        // Si on se dirige vers le bas (DOWN)
+        if(coord.getY() > 0)
+        {
+            dir = Direction.DOWN;
+        }
+
+        // Si on se dirige vers la gauche (LEFT)
+        if(coord.getX() < 0)
+        {
+            dir = Direction.LEFT;
+        }
+
+        // Si on se dirige vers la droite (RIGHT)
+        if(coord.getX() > 0)
+        {
+            dir = Direction.RIGHT;
+        }
+
+        return dir;
     }
 
     /**
@@ -210,7 +284,7 @@ public class Monster extends Movable {
         boolean monsterOnThisCase = false;
         for(Monster mst : this.othersMonsters)
         {
-            if(mst.pos.equal(cas))
+            if(mst.pos.equals(cas.coordonnees))
             {
                 monsterOnThisCase = true;
             }
