@@ -17,8 +17,8 @@ public class Model extends Observable implements Runnable{
 
       pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
-      Monster monster1 = new Monster(new Coordonnees(9, 9), plateau);
-      Monster monster2 = new Monster(new Coordonnees(10, 9), plateau);
+      Monster monster1 = new Monster(new Coordonnees(4, 2), plateau);
+      Monster monster2 = new Monster(new Coordonnees(16, 2), plateau);
       Monster monster3 = new Monster(new Coordonnees(11, 9), plateau);
 
       monsters = new ArrayList<Monster>();
@@ -44,13 +44,13 @@ public class Model extends Observable implements Runnable{
             //pacman.run();
              int i = 0;
             System.out.println("-----------------------");
-             /*for(Monster mst : this.monsters)
+             for(Monster mst : this.monsters)
              {
                  System.out.println("BEFORE m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
                  mst.run();
                  System.out.println("AFTER m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
                  i++;
-             }*/
+             }
              setChanged();
 
              notifyObservers();

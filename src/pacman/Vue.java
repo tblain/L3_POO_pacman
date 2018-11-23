@@ -110,9 +110,9 @@ public class Vue extends Application  {
             }
         }
         for (Monster monster : monsters) {
-            gPane.add(new Text("M"), monster.pos.getX(), monster.pos.getY());
+            gPane.add(new Text("M"), monster.pos.getY(), monster.pos.getX());
         }
-        gPane.add(new Text("C"), pacman.pos.getX(), pacman.pos.getY());
+        gPane.add(new Text("C"), pacman.pos.getY(), pacman.pos.getX());
         System.out.println("    PLateau chargé  ");
 
     }
