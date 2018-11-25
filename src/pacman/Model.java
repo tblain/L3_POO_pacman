@@ -17,9 +17,10 @@ public class Model extends Observable implements Runnable{
 
       pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
-      Monster monster1 = new Monster(new Coordonnees(4, 2), plateau);
+      Monster monster1 = new Monster(new Coordonnees(7, 4), plateau);
+      monster1.setDir(Direction.UP);
       Monster monster2 = new Monster(new Coordonnees(16, 2), plateau);
-      Monster monster3 = new Monster(new Coordonnees(11, 9), plateau);
+      Monster monster3 = new Monster(new Coordonnees(11, 2), plateau);
 
       monsters = new ArrayList<Monster>();
       monsters.add(monster1);
@@ -41,14 +42,14 @@ public class Model extends Observable implements Runnable{
             int o = Map1.MAP[9][10]; // Le spawn du milieu des fantom
             int in = Map1.MAP[10][9]; // devrait etre un mur
 
-            //pacman.run();
+            pacman.run();
              int i = 0;
             System.out.println("-----------------------");
              for(Monster mst : this.monsters)
              {
-                 System.out.println("BEFORE m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
+                 //System.out.println("BEFORE m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
                  mst.run();
-                 System.out.println("AFTER m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
+                 //System.out.println("AFTER m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
                  i++;
              }
              setChanged();

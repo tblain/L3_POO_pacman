@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -60,6 +61,31 @@ public class Vue extends Application  {
         border.setCenter(gPane);
 
         Scene scene = new Scene(border, Color.LIGHTBLUE);
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                switch (ke.getCode()) {
+                    case RIGHT:
+                        m.pacman.setDir(Direction.RIGHT);
+                        System.out.println("vers la droite");
+                        break;
+
+                    case LEFT:
+                        m.pacman.setDir(Direction.LEFT);
+                        System.out.println("vers la gauche");
+                        break;
+
+                    case UP:
+                        m.pacman.setDir(Direction.UP);
+                        System.out.println("vers le haut");
+                        break;
+
+                    case DOWN:
+                        m.pacman.setDir(Direction.DOWN);
+                        System.out.println("vers le bas");
+                        break;
+                }
+            }
+        });
 
         primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);
@@ -106,14 +132,14 @@ public class Vue extends Application  {
                 }
 
                 final Text text = new Text(stringCase);
-                gPane.add(text, j, i);
+                gPane.add(text, i, j);
             }
         }
         for (Monster monster : monsters) {
-            gPane.add(new Text("M"), monster.pos.getY(), monster.pos.getX());
+            gPane.add(new Text("M"), monster.pos.getX(), monster.pos.getY());
         }
-        gPane.add(new Text("C"), pacman.pos.getY(), pacman.pos.getX());
-        System.out.println("    PLateau chargé  ");
+        gPane.add(new Text("C"), pacman.pos.getX(), pacman.pos.getY());
+        //System.out.println("    PLateau chargé  ");
 
     }
 

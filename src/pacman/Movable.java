@@ -23,6 +23,14 @@ public abstract class Movable implements Runnable{
         this.pos = pos;
     }
 
+    public Direction getDir() {
+        return dir;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
+    }
+
     /**
      * retourne la position + 1 grâce à la direction
      * @return

@@ -21,7 +21,7 @@ public class Plateau {
         {
             for(int y = 0; y < nbLignes; y++)
             {
-                cell = tab[x][y];
+                cell = tab[y][x];
                 // 1 = mur, 2 = passage, 3 = gomme, 4 = superGomme
                 plateauTab[x][y] = new Case(new Coordonnees(x, y), cell == 1, (cell == 2 || cell == 3 || cell == 4), cell == 3, cell == 4);
             }
