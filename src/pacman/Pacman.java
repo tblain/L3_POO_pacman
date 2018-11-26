@@ -30,7 +30,7 @@ public class Pacman extends Movable {
         Case cas = this.plateau.getCase(this.pos);
 
         // On gére le temps restant pour le super pac gomme
-        if(this.remainingTimeForSuperPacGomme != 0)
+        if(this.remainingTimeForSuperPacGomme > 0)
         {
             this.remainingTimeForSuperPacGomme--;
         }
@@ -43,12 +43,14 @@ public class Pacman extends Movable {
 
             while(i < this.monsters.size())
             {
-                if(this.monsters.get(i).pos == this.pos)
+                if(this.monsters.get(i).pos.equals(this.getPos()))
                 {
                     monster = this.monsters.get(i);
+
                     // Pour quitter la boucle si sur un monstre dans la même case
                     i = this.monsters.size();
                 }
+                i++;
             }
 
             // Si on peut manger un monster
