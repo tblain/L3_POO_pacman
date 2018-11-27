@@ -13,65 +13,53 @@ public class Model extends Observable implements Runnable{
     public ArrayList<Monster> monsters;
 
     public Model() {
-      plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
+        // On init tout
+        plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
+        pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
-      pacman = new Pacman(new Coordonnees(10, 15), plateau);
+        Monster monster1 = new Monster(new Coordonnees(7, 4), plateau);
+        monster1.setDir(Direction.UP);
+        Monster monster2 = new Monster(new Coordonnees(16, 2), plateau);
+        Monster monster3 = new Monster(new Coordonnees(11, 2), plateau);
 
-      Monster monster1 = new Monster(new Coordonnees(7, 4), plateau);
-      monster1.setDir(Direction.UP);
-      Monster monster2 = new Monster(new Coordonnees(16, 2), plateau);
-      Monster monster3 = new Monster(new Coordonnees(11, 2), plateau);
+        monsters = new ArrayList<Monster>();
+        monsters.add(monster1);
+        monsters.add(monster2);
+        monsters.add(monster3);
 
-      monsters = new ArrayList<Monster>();
-      monsters.add(monster1);
-      monsters.add(monster2);
-      monsters.add(monster3);
+        pacman.init(monsters);
 
-      pacman.init(monsters);
-
-      monster1.init(pacman, monsters);
-      monster2.init(pacman, monsters);
-      monster3.init(pacman, monsters);
-
+        monster1.init(pacman, monsters);
+        monster2.init(pacman, monsters);
+        monster3.init(pacman, monsters);
     }
 
     @Override
     public void run() {
-        while(pacman.alive)
+        if(pacman.alive)
         {
-            int o = Map1.MAP[9][10]; // Le spawn du milieu des fantom
-            int in = Map1.MAP[10][9]; // devrait etre un mur
-
-            pacman.run();
-             int i = 0;
-            System.out.println("-----------------------");
              for(Monster mst : this.monsters)
              {
-                 //System.out.println("BEFORE m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
                  mst.run();
-                 //System.out.println("AFTER m" + i + ": " + mst.pos.getX() + " | y : " + mst.pos.getY());
-                 i++;
              }
+             pacman.run();
              setChanged();
-
              notifyObservers();
 
              try {
-                 TimeUnit.SECONDS.sleep(1);
+                 TimeUnit.MILLISECONDS.sleep(500);
              } catch (InterruptedException e) {
                  e.printStackTrace();
              }
 
         }
-        setChanged();
-        notifyObservers();
     }
 
 
     public Plateau getPlateau() { return plateau; }
 
     public int getScore() {
-        return score;
+        return pacman.score;
     }
 
     public void setScore(int score) {
