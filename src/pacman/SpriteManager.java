@@ -9,35 +9,10 @@ import java.io.FileNotFoundException;
 
 public class SpriteManager {
 
-    public enum Sprite
+
+    public static ImageView getImageOf(String spriteUrl)
     {
-        PACMAN ("sprites/pacman.png");
-
-
-        public final String url;
-
-        Sprite(String url)
-        {
-            this.url = url;
-        }
-
-        public String url(){
-            return url;
-        }
-    }
-
-    public static ImageView getImageOf(Sprite sprite)
-    {
-        String url = null;
-
-        switch (sprite)
-        {
-            case PACMAN:
-                url = Sprite.PACMAN.url();
-                break;
-        }
-
-        File file = new File(url);
+        File file = new File(spriteUrl);
 
         Image im = null;
         try {

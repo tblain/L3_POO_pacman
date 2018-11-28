@@ -5,7 +5,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.image.Image;
@@ -29,6 +31,12 @@ public class Vue extends Application  {
     public BorderPane border;
     public Scene scene;
 
+    // Utilisé pour les animations car pas threadées
+    public int compteur;
+
+    // Pour les animations des monstres
+    MonsterAnimatorFactory mstAnimFact = new MonsterAnimatorFactory();
+
     public void setContent()
     {
         // gestion du placement (permet de placer le champ Text affichage en haut, et GridPane gPane au centre)
@@ -39,7 +47,7 @@ public class Vue extends Application  {
 
         border.setCenter(gPane);
 
-        scene = new Scene(border, Color.LIGHTBLUE);
+        scene = new Scene(border, Color.BLACK);
     }
 
     public void setEvent()
@@ -50,22 +58,18 @@ public class Vue extends Application  {
                 switch (ke.getCode()) {
                     case RIGHT:
                         m.pacman.setDir(Direction.RIGHT);
-                        System.out.println("vers la droite");
                         break;
 
                     case LEFT:
                         m.pacman.setDir(Direction.LEFT);
-                        System.out.println("vers la gauche");
                         break;
 
                     case UP:
                         m.pacman.setDir(Direction.UP);
-                        System.out.println("vers le haut");
                         break;
 
                     case DOWN:
                         m.pacman.setDir(Direction.DOWN);
-                        System.out.println("vers le bas");
                         break;
                 }
             }
@@ -81,6 +85,7 @@ public class Vue extends Application  {
         setContent();
         m = new Model();
         setEvent();
+        compteur = 1;
 
         // la vue observe les "update" du "?", et réalise les mises à jour graphiques
         m.addObserver((o, arg) -> Platform.runLater(this::afficherPlateau));
@@ -94,6 +99,7 @@ public class Vue extends Application  {
                 while(m.getPacman().alive)
                 {
                     m.run();
+                    compteur += 1;
                     if(isCancelled())
                     {
                         break;
@@ -130,6 +136,8 @@ public class Vue extends Application  {
         Plateau p = m.getPlateau();
         Pacman pacman = m.getPacman();
         ArrayList<Monster> monsters = m.getMonsters();
+        // Un passage par défaut
+
 
         if(pacman.alive)
         {
@@ -138,30 +146,27 @@ public class Vue extends Application  {
                 for (int j = 0; j < column; j++)
                 {
                     Case c = p.getCase(i, j);
-                    String stringCase = "";
-
+                    Node node = node  = Passage.getPassage();
                     if (c.isSuperGomme()) {
-                        stringCase = " * ";
+                        node = SuperGomme.getSuperGomme();
                     }
                     else if (c.isGomme()) {
-                        stringCase = " . ";
-                    }
-                    else if (c.isPassage()) {
-                        stringCase = "   ";
+                        node = Gomme.getGomme();
                     }
                     else if (c.isMur()) {
-                        stringCase = "[|]";
+                        node = Wall.getWall();
                     }
 
-                    final Text text = new Text(stringCase);
-                    gPane.add(text, i, j);
+
+                    gPane.add(node, i, j);
                 }
             }
             for (Monster monster : monsters) {
-                gPane.add(new Text("M"), monster.pos.getX(), monster.pos.getY());
+                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(), pacman.remainingTimeForSuperPacGomme != 0)
+                        , monster.pos.getX(), monster.pos.getY());
             }
 
-            gPane.add(new Text("P"), pacman.pos.getX(), pacman.pos.getY());
+            gPane.add(PacmanAnimator.getImageView(pacman.getDir(),this.compteur % 2 == 0), pacman.pos.getX(), pacman.pos.getY());
 
         }
         else
@@ -170,6 +175,8 @@ public class Vue extends Application  {
         }
 
     }
+
+
 
 
 

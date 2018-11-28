@@ -17,10 +17,10 @@ public class Model extends Observable implements Runnable{
         plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
         pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
-        Monster monster1 = new Monster(new Coordonnees(7, 4), plateau);
+        Monster monster1 = new Monster(new Coordonnees(7, 4), plateau, MonsterName.Shadow);
         monster1.setDir(Direction.UP);
-        Monster monster2 = new Monster(new Coordonnees(16, 2), plateau);
-        Monster monster3 = new Monster(new Coordonnees(11, 2), plateau);
+        Monster monster2 = new Monster(new Coordonnees(16, 2), plateau, MonsterName.Pokey);
+        Monster monster3 = new Monster(new Coordonnees(11, 2), plateau, MonsterName.Speedy);
 
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
@@ -47,7 +47,7 @@ public class Model extends Observable implements Runnable{
              notifyObservers();
 
              try {
-                 TimeUnit.MILLISECONDS.sleep(500);
+                 TimeUnit.MILLISECONDS.sleep(300);
              } catch (InterruptedException e) {
                  e.printStackTrace();
              }

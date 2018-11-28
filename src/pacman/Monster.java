@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Monster extends Movable {
     protected Pacman pacman;
+    public MonsterName name;
 
     // Savoir où ils sont pour ne pas aller sur les mêmes cases qu'eux
     protected ArrayList<Monster> othersMonsters;
 
-    public Monster(Coordonnees pos, Plateau plateau)
+    public Monster(Coordonnees pos, Plateau plateau, MonsterName name)
     {
         super(pos, plateau, Direction.RIGHT);
         this.othersMonsters = new ArrayList<>();
+        this.name = name;
     }
     
     public void init(Pacman pacman, ArrayList<Monster> othersMonsters) {
