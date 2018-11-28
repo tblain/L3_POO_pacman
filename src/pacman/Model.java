@@ -19,8 +19,12 @@ public class Model extends Observable implements Runnable{
 
         Monster monster1 = new Monster(new Coordonnees(7, 4), plateau, MonsterName.Shadow);
         monster1.setDir(Direction.UP);
-        Monster monster2 = new Monster(new Coordonnees(16, 2), plateau, MonsterName.Pokey);
-        Monster monster3 = new Monster(new Coordonnees(11, 2), plateau, MonsterName.Speedy);
+        Monster monster2 = new Monster(new Coordonnees(13, 4), plateau, MonsterName.Pokey);
+        Monster monster3 = new Monster(new Coordonnees(10, 7), plateau, MonsterName.Speedy);
+
+        monster1.setDir(Direction.UP);
+        monster2.setDir(Direction.UP);
+        monster3.setDir(Direction.UP);
 
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
@@ -38,19 +42,22 @@ public class Model extends Observable implements Runnable{
     public void run() {
         if(pacman.alive)
         {
-             for(Monster mst : this.monsters)
-             {
-                 mst.run();
-             }
-             pacman.run();
-             setChanged();
-             notifyObservers();
+            System.out.println("\n=============== Nouveau Tour ===============\n");
+            for(Monster mst : this.monsters)
+            {
+                //System.out.println("tour de m" + i++);
+                mst.run();
+            }
+            pacman.run();
+            setChanged();
+            notifyObservers();
 
-             try {
-                 TimeUnit.MILLISECONDS.sleep(300);
-             } catch (InterruptedException e) {
-                 e.printStackTrace();
-             }
+            try {
+                TimeUnit.MILLISECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Fin de tour");
 
         }
     }

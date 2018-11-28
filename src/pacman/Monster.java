@@ -15,7 +15,7 @@ public class Monster extends Movable {
         this.othersMonsters = new ArrayList<>();
         this.name = name;
     }
-    
+
     public void init(Pacman pacman, ArrayList<Monster> othersMonsters) {
         this.pacman = pacman;
 
@@ -42,11 +42,24 @@ public class Monster extends Movable {
             }
         }
         // On met à jour notre position
-        Coordonnees nextPossibleCoord = this.getAI();
-        if(nextPossibleCoord != null)
+        //Coordonnees nextPossibleCoord = this.getAI();
+        Coordonnees mescouillesauborddeleau = this.dijkstra();
+
+        if(mescouillesauborddeleau != null)
         {
-            this.dir = this.getDirection(nextPossibleCoord);
-            this.pos = nextPossibleCoord;
+            this.dir = this.getDirection(mescouillesauborddeleau);
+            this.pos = mescouillesauborddeleau;
+        } else {
+            System.out.println("error : pas de next coord");
+        }
+
+        if(pacman.pos.equals(this.pos))
+        {
+            if(pacman.remainingTimeForSuperPacGomme == 0)
+            {
+                // On mange pacman
+                pacman.alive = false;
+            }
         }
 
     }
@@ -292,5 +305,22 @@ public class Monster extends Movable {
             }
         }
         return monsterOnThisCase;
+    }
+
+    public Coordonnees dijkstra() {
+        //SearchCoord test = (SearchCoord) this.pos;
+        //System.out.println("=============================");
+        //System.out.println("Dijkstra start");
+        //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
+        //System.out.println("goal pos x: " + pacman.pos.getX() + " | y: " + pacman.pos.getY());
+        BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(pacman.pos.getX(), pacman.pos.getY()), othersMonsters, isInFear());
+        bfs.performBFS();
+        SearchCoord[] path = bfs.getPath();
+
+        return path[path.length-2];
+    }
+
+    public boolean isInFear() {
+        return pacman.remainingTimeForSuperPacGomme > 0;
     }
 }

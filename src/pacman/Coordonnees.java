@@ -66,4 +66,8 @@ public class Coordonnees implements Cloneable{
         }
         return o;
     }
+
+    public double distance(Coordonnees coord) {
+        return Math.hypot(this.getX() - coord.getX(), this.getY() - coord.getY());
+    }
 }
