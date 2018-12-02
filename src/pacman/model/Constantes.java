@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 public class Constantes {
     public static final int TIME_SUPER_PAC_GOMME = 15;

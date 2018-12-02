@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 public class Coordonnees implements Cloneable{
     private int x;

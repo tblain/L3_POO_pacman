@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 
 import javafx.application.Application;
@@ -14,10 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import pacman.model.Direction;
-import pacman.model.Map1;
-import pacman.model.Model;
-import pacman.model.Monster;
+import pacman.model.*;
 
 import java.util.ArrayList;
 
@@ -93,7 +90,7 @@ public class Vue extends Application  {
             @Override
             protected Void call() throws Exception {
 
-                while(m.getPacman().alive)
+                while(m.getPacman().isAlive())
                 {
                     m.run();
                     compteur += 1;
@@ -136,22 +133,22 @@ public class Vue extends Application  {
         // Un passage par défaut
 
 
-        if(pacman.alive)
+        if(pacman.isAlive())
         {
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < column; j++)
                 {
                     Case c = p.getCase(i, j);
-                    Node node = node  = Passage.getPassage();
+                    Node node = node  = CaseSpriteGenerator.getPassage();
                     if (c.isSuperGomme()) {
-                        node = SuperGomme.getSuperGomme();
+                        node = CaseSpriteGenerator.getSuperGomme();
                     }
                     else if (c.isGomme()) {
-                        node = Gomme.getGomme();
+                        node = CaseSpriteGenerator.getGomme();
                     }
                     else if (c.isMur()) {
-                        node = Wall.getWall();
+                        node = CaseSpriteGenerator.getWall();
                     }
 
 
@@ -159,11 +156,11 @@ public class Vue extends Application  {
                 }
             }
             for (Monster monster : monsters) {
-                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(), pacman.remainingTimeForSuperPacGomme != 0)
-                        , monster.pos.getX(), monster.pos.getY());
+                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(), pacman.getRemainingTimeForSuperPacGomme() != 0)
+                        , monster.getPos().getX(), monster.getPos().getY());
             }
 
-            gPane.add(PacmanAnimator.getImageView(pacman.getDir(),this.compteur % 2 == 0), pacman.pos.getX(), pacman.pos.getY());
+            gPane.add(PacmanAnimator.getImageView(pacman.getDir(),this.compteur % 2 == 0), pacman.getPos().getX(), pacman.getPos().getY());
 
         }
         else

@@ -1,6 +1,4 @@
-package pacman;
-
-import pacman.model.Coordonnees;
+package pacman.model;
 
 public class Case {
     public Coordonnees coordonnees;

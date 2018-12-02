@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

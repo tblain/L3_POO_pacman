@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 import pacman.model.Coordonnees;
 import pacman.model.Direction;
@@ -69,5 +69,9 @@ public abstract class Movable implements Runnable{
         return nextPos;
     }
 
+    public boolean isAlive()
+    {
+        return this.alive;
+    }
 
 }

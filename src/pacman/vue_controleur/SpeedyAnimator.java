@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 public class SpeedyAnimator extends MonsterAnimator {
     public SpeedyAnimator() {

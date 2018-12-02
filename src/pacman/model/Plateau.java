@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 import pacman.model.Coordonnees;
 

@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 public class Map1 {
     public static final int ROW = 21;

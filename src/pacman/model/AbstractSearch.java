@@ -1,5 +1,4 @@
-package pacman;
-
+package pacman.model;
 import java.util.ArrayList;
 
 public class AbstractSearch {

@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 public enum Direction {
     UP,

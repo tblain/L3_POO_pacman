@@ -1,4 +1,4 @@
-package pacman;
+package pacman.model;
 
 import pacman.model.Constantes;
 import pacman.model.Coordonnees;
@@ -91,5 +91,10 @@ public class Pacman extends Movable {
         {
             this.pos = nextMove;
         }
+    }
+
+    public int getRemainingTimeForSuperPacGomme()
+    {
+        return this.remainingTimeForSuperPacGomme;
     }
 }

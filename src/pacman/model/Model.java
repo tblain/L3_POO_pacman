@@ -1,8 +1,6 @@
-package pacman;
+package pacman.model;
 
-import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.TimeUnit;
 

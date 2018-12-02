@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 public class ShadowAnimator extends MonsterAnimator {
 

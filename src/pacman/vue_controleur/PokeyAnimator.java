@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 public class PokeyAnimator extends MonsterAnimator {
     public PokeyAnimator() {

@@ -1,4 +1,4 @@
-package pacman;
+package pacman.vue_controleur;
 
 public class ConstantesVue {
     public static final int SIZE_CASE_WIDTH = 35;
