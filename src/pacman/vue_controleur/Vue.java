@@ -46,8 +46,9 @@ public class Vue extends Application  {
 
     public void setEvent()
     {
-        // Contrôle pour Pacman
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        // Contrôle pour Pacman setOnKeyReleased
+        // On key pressed pour meilleur ergo
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent ke) {
                 switch (ke.getCode()) {
                     case RIGHT:

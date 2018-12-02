@@ -93,6 +93,18 @@ public class Pacman extends Movable {
         }
     }
 
+    /**
+     * On met à jour la Direction du Pacman seulement s'il ne regardera pas un mur
+     * @param dir
+     */
+    public void setDir(Direction dir)
+    {
+        if(!plateau.getCase(this.getNextPosition(dir)).isMur())
+        {
+            this.dir = dir;
+        }
+    }
+
     public int getRemainingTimeForSuperPacGomme()
     {
         return this.remainingTimeForSuperPacGomme;

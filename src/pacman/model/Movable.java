@@ -10,7 +10,7 @@ public abstract class Movable implements Runnable{
 
     protected Plateau plateau;
 
-    public Movable(Coordonnees pos, Plateau plateau, Direction dir)
+    Movable(Coordonnees pos, Plateau plateau, Direction dir)
     {
         this.pos = pos;
         this.alive = true;
@@ -30,43 +30,65 @@ public abstract class Movable implements Runnable{
         return dir;
     }
 
+    /**
+     * On set la dir uniquement si ce n'est pas un mur
+     * @param dir
+     */
     public void setDir(Direction dir) {
         this.dir = dir;
     }
 
     /**
-     * retourne la position + 1 grâce à la direction
+     * Retourne la position suivante par rapport à la position et direction actuelle
      * @return
      */
-    public Coordonnees getNextPosition()
+    Coordonnees getNextPosition()
     {
         Coordonnees nextPos = (Coordonnees)this.pos.clone();
 
-        switch (this.dir)
-        {
-            case UP:
-            {
-                nextPos.setY(nextPos.getY()-1);
-                break;
-            }
-            case DOWN:
-            {
-                nextPos.setY(nextPos.getY()+1);
-                break;
-            }
-            case LEFT:
-            {
-                nextPos.setX(nextPos.getX()-1);
-                break;
-            }
-            case RIGHT:
-            {
-                nextPos.setX(nextPos.getX()+1);
-                break;
-            }
+        return getCoordByDir(this.dir, nextPos);
+    }
 
+    /**
+     * Retourne la position suivante par rapport à la position actuelle et la direction donnée
+     * @param dir
+     * @return
+     */
+    Coordonnees getNextPosition(Direction dir)
+    {
+        Coordonnees nextPos = (Coordonnees)this.pos.clone();
+
+
+        return getCoordByDir(dir, nextPos);
+    }
+
+    /**
+     * Retourne des coordonnées par rapport à une des coordonnées et une direction
+     * @param dir
+     * @param coord
+     * @return
+     */
+    Coordonnees getCoordByDir(Direction dir, Coordonnees coord)
+    {
+        switch (dir) {
+            case UP: {
+                coord.setY(coord.getY() - 1);
+                break;
+            }
+            case DOWN: {
+                coord.setY(coord.getY() + 1);
+                break;
+            }
+            case LEFT: {
+                coord.setX(coord.getX() - 1);
+                break;
+            }
+            case RIGHT: {
+                coord.setX(coord.getX() + 1);
+                break;
+            }
         }
-        return nextPos;
+        return coord;
     }
 
     public boolean isAlive()

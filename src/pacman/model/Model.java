@@ -53,7 +53,7 @@ public class Model extends Observable implements Runnable{
             notifyObservers();
 
             try {
-                TimeUnit.MILLISECONDS.sleep(250);
+                TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
