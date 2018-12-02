@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f509af95-2b69-408d-a417-21f0d4b82e64" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pacman/model/AbstractSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/AbstractSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pacman/model/BFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/BFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pacman/model/Map1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/Map1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pacman/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pacman/model/Movable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/Movable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pacman/model/Pacman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/model/Pacman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,22 +64,22 @@
     <session id="94973883">
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="4" />
+          <entry key="java" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="4" />
+          <entry key="JAVA" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="126" />
+          <entry key="java" value="135" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="126" />
+          <entry key="JAVA" value="135" />
         </counts>
       </usages-collector>
     </session>
@@ -86,72 +87,57 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/CaseSpriteGenerator.java">
+        <entry file="file://$PROJECT_DIR$/src/pacman/model/AbstractSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-74">
-              <caret line="15" column="76" selection-start-line="15" selection-start-column="76" selection-end-line="15" selection-end-column="76" />
+            <state relative-caret-position="240">
+              <caret line="16" column="41" lean-forward="true" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pacman/model/BFS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1965">
+              <caret line="131" column="1" selection-start-line="131" selection-start-column="1" selection-end-line="131" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#252#253#0" expanded="true" />
+                <element signature="e#300#301#0" expanded="true" />
+                <element signature="e#353#354#0" expanded="true" />
+                <element signature="e#405#406#0" expanded="true" />
+                <element signature="e#441#442#0" expanded="true" />
+                <element signature="e#502#503#0" expanded="true" />
+                <element signature="e#539#540#0" expanded="true" />
+                <element signature="e#601#602#0" expanded="true" />
+                <element signature="e#635#636#0" expanded="true" />
+                <element signature="e#684#685#0" expanded="true" />
+                <element signature="e#738#739#0" expanded="true" />
+                <element signature="e#797#798#0" expanded="true" />
+                <element signature="e#1834#1847#0" expanded="true" />
+                <element signature="e#1950#1963#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pacman/model/Map1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="20" selection-start-column="20" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="49">
-              <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pacman/model/Pacman.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="96" column="82" selection-start-line="96" selection-start-column="82" selection-end-line="96" selection-end-column="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pacman/model/Movable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="52" column="94" lean-forward="true" selection-start-line="52" selection-start-column="94" selection-end-line="52" selection-end-column="94" />
-              <folding>
-                <element signature="e#613#614#0" expanded="true" />
-                <element signature="e#639#640#0" expanded="true" />
-                <element signature="e#769#770#0" expanded="true" />
-                <element signature="e#799#800#0" expanded="true" />
-                <element signature="e#1916#1917#0" expanded="true" />
-                <element signature="e#1949#1950#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pacman/model/Model.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="55" column="47" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="47" />
+            <state relative-caret-position="285">
+              <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pacman/model/Case.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -202,12 +188,9 @@
         <option value="$PROJECT_DIR$/src/pacman/Model.java" />
         <option value="$PROJECT_DIR$/src/pacman/Vue.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Monster.java" />
-        <option value="$PROJECT_DIR$/src/pacman/model/AbstractSearch.java" />
-        <option value="$PROJECT_DIR$/src/pacman/model/BFS.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Constantes.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Coordonnees.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Direction.java" />
-        <option value="$PROJECT_DIR$/src/pacman/model/Map1.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/MonsterName.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Plateau.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/SearchCoord.java" />
@@ -224,6 +207,9 @@
         <option value="$PROJECT_DIR$/src/pacman/model/Movable.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Pacman.java" />
         <option value="$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java" />
+        <option value="$PROJECT_DIR$/src/pacman/model/AbstractSearch.java" />
+        <option value="$PROJECT_DIR$/src/pacman/model/BFS.java" />
+        <option value="$PROJECT_DIR$/src/pacman/model/Map1.java" />
         <option value="$PROJECT_DIR$/src/pacman/model/Model.java" />
       </list>
     </option>
@@ -265,6 +251,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -282,6 +269,12 @@
               <item name="L3_POO_pacman" type="b2602c69:ProjectViewProjectNode" />
               <item name="L3_POO_pacman" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="L3_POO_pacman" type="b2602c69:ProjectViewProjectNode" />
+              <item name="L3_POO_pacman" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Calculette" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="L3_POO_pacman" type="b2602c69:ProjectViewProjectNode" />
@@ -307,7 +300,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -376,10 +368,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-3" y="31" width="1926" height="1021" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18993288" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16134185" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -387,7 +379,7 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.04680851" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25391498" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -426,20 +418,6 @@
     <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/Passage.java" />
     <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/SuperGomme.java" />
     <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/Wall.java" />
-    <entry file="file://$PROJECT_DIR$/src/pacman/model/AbstractSearch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pacman/model/BFS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pacman/model/Constantes.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -459,13 +437,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pacman/model/Direction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pacman/model/Map1.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
@@ -601,20 +572,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pacman/model/Model.java">
+    <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="55" column="47" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="47" />
+        <state relative-caret-position="49">
+          <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pacman/vue_controleur/Vue.java">
+    <entry file="file://$PROJECT_DIR$/src/pacman/model/AbstractSearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49">
-          <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
+        <state relative-caret-position="240">
+          <caret line="16" column="41" lean-forward="true" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pacman/model/BFS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1965">
+          <caret line="131" column="1" selection-start-line="131" selection-start-column="1" selection-end-line="131" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#252#253#0" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+            <element signature="e#405#406#0" expanded="true" />
+            <element signature="e#441#442#0" expanded="true" />
+            <element signature="e#502#503#0" expanded="true" />
+            <element signature="e#539#540#0" expanded="true" />
+            <element signature="e#601#602#0" expanded="true" />
+            <element signature="e#635#636#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#738#739#0" expanded="true" />
+            <element signature="e#797#798#0" expanded="true" />
+            <element signature="e#1834#1847#0" expanded="true" />
+            <element signature="e#1950#1963#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pacman/model/Map1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="20" selection-start-column="20" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pacman/model/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -1,4 +1,5 @@
 package pacman.model;
+
 import java.util.ArrayList;
 
 public class AbstractSearch {
@@ -46,6 +47,7 @@ public class AbstractSearch {
         SearchCoord [] ret = new SearchCoord[maxDepth];
 
         for (int i=0; i<maxDepth; i++) {
+            //System.out.println("path" + searchPath[i]);
             ret[i] = searchPath[i];
         }
         return ret;
@@ -58,19 +60,20 @@ public class AbstractSearch {
         int x = coord.getX();
         int y = coord.getY();
         int num = 0;
-
-        if (!p.getCase(x - 1, y).isMur() && pasDeMonstreSurCoord(new Coordonnees(x -1, y))) {
+        // && pasDeMonstreSurCoord(new Coordonnees(x -1, y))
+        if (!p.getCase(x - 1, y).isMur()) {
             tempMoves[num++] = new SearchCoord(x - 1, y);
         }
-        if (!p.getCase(x + 1, y).isMur() && pasDeMonstreSurCoord(new Coordonnees(x + 1, y))) {
+        // && pasDeMonstreSurCoord(new Coordonnees(x + 1, y))
+        if (!p.getCase(x + 1, y).isMur()) {
             tempMoves[num++] = new SearchCoord(x + 1, y);
         }
-
-        if (!p.getCase(x, y + 1).isMur() && pasDeMonstreSurCoord(new Coordonnees(x, y + 1))) {
+        // && pasDeMonstreSurCoord(new Coordonnees(x, y + 1))
+        if (!p.getCase(x, y + 1).isMur()) {
             tempMoves[num++] = new SearchCoord(x, y + 1);
         }
-
-        if (!p.getCase(x, y - 1).isMur() && pasDeMonstreSurCoord(new Coordonnees(x, y - 1))) {
+        // && pasDeMonstreSurCoord(new Coordonnees(x, y - 1))
+        if (!p.getCase(x, y - 1).isMur()) {
             tempMoves[num++] = new SearchCoord(x, y - 1);
         }
         return tempMoves;

@@ -1,4 +1,5 @@
 package pacman.model;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Stack;
@@ -33,6 +34,19 @@ public class BFS extends AbstractSearch {
         public String toString() {
             return String.valueOf(stack.size());
         }
+
+        public void sort() {
+            ArrayList<SearchCoord> tmp = new ArrayList<>();
+
+            while (!stack.empty()) {
+                tmp.add((SearchCoord) stack.pop());
+            }
+
+            tmp.sort(new SortCoordonees());
+            for (SearchCoord coord : tmp) {
+                stack.add(coord);
+            }
+        }
     }
 
     protected class SortCoordonees implements Comparator<SearchCoord> {
@@ -40,15 +54,9 @@ public class BFS extends AbstractSearch {
         @Override
         public int compare(SearchCoord o1, SearchCoord o2) {
             if(o1.distance(goalCoord) > o2.distance(goalCoord)) {
-                if(isInFear)
-                    return 1;
-                else
-                    return -1;
+                return -1;
             } else {
-                if(isInFear)
-                    return -1;
-                else
-                    return 1;
+                return 1;
             }
         }
 
@@ -85,18 +93,13 @@ public class BFS extends AbstractSearch {
                     for (int i = 0; i < possibleMoves.length; i++) { // for each possible moves
                         if(possibleMoves[i] != null) { // we check if it's a correct searchCoord
                             possiblePos = possibleMoves[i];
-                            listSearchCoord.add(possiblePos); // add it to the list
-                            possiblePos.predecessor = searchCoord; // set the current searchCoord as the predecessor of the coordsible searchCoord
+                            queue.push(possiblePos); // add it to the list
+                            possiblePos.predecessor = searchCoord; // set the current searchCoord as the predecessor of the possible searchCoord
                         }
                     }
 
-                    listSearchCoord.sort(new SortCoordonees()); // we sort the list with the closest searchCoord from the goal in first
-                    // using the comparator define in the class SortCoordonee
+                    queue.sort(); // we sort the list with the closest searchCoord from the goal in first
 
-                    for (SearchCoord sCoord : listSearchCoord) {
-                        //System.out.println("    test");
-                        queue.push(sCoord); // we add to the queue each coordsible searchCoord
-                    }
 
                     listSearchCoord.clear();
 
@@ -115,6 +118,7 @@ public class BFS extends AbstractSearch {
             }
             searchPath[i++] = searchCoord.predecessor;
             this.maxDepth++;
+            System.out.println(maxDepth);
         } else {
             searchPath[0] = startCoord;
             searchPath[1] = startCoord;
