@@ -39,6 +39,7 @@ public class Monster extends Movable {
         int mx = pos.getX();
         int my = pos.getY();
         System.out.println("alive : " + alive);
+
         if(alive) {
 
             // On test si pacman est sur notre case, si oui on peut le manger

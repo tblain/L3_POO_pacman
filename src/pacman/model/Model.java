@@ -46,23 +46,22 @@ public class Model extends Observable implements Runnable{
         if(pacman.alive)
         {
             int i = 1;
-            System.out.println("\n=============== Nouveau Tour ===============\n");
+            pacman.run();
             for(Monster mst : this.monsters)
             {
                 System.out.println("--------------------------------");
                 System.out.println("tour de m" + i++);
                 mst.run();
             }
-            pacman.run();
+
             setChanged();
             notifyObservers();
 
             try {
-                TimeUnit.MILLISECONDS.sleep(500);
+                TimeUnit.MILLISECONDS.sleep(175);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Fin de tour");
 
         }
     }

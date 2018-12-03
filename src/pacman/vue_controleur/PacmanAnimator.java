@@ -24,17 +24,16 @@ public class PacmanAnimator {
                 rotation = 270;
                 break;
         }
-        System.out.println(rotation);
 
-        ImageView iv = null;
+        ImageView iv = new ImageView();
 
         if (mouse_open)
         {
-            iv = SpriteManager.getImageOf(RIGHT_MOUSE_OPEN);
+            iv.setImage(SpriteManager.getImageOf(RIGHT_MOUSE_OPEN));
         }
         else
         {
-            iv = SpriteManager.getImageOf(RIGHT_MOUSE_CLOSE);
+            iv.setImage(SpriteManager.getImageOf(RIGHT_MOUSE_CLOSE));
         }
         iv.setRotate(rotation);
 

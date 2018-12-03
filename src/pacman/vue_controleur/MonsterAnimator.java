@@ -55,7 +55,8 @@ public class MonsterAnimator {
             }
         }
 
-        ImageView iv = SpriteManager.getImageOf(chosen);
+        ImageView iv = new ImageView();
+        iv.setImage(SpriteManager.getImageOf(chosen));
 
         iv.setFitHeight(ConstantesVue.SIZE_CASE_HEIGHT);
         iv.setFitWidth(ConstantesVue.SIZE_CASE_WIDTH);

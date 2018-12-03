@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 public class SpriteManager {
 
 
-    public static ImageView getImageOf(String spriteUrl)
+    public static Image getImageOf(String spriteUrl)
     {
         File file = new File(spriteUrl);
 
@@ -21,9 +21,6 @@ public class SpriteManager {
             e.printStackTrace();
         }
 
-        ImageView iv = new ImageView();
-        iv.setImage(im);
-
-        return iv;
+        return im;
     }
 }

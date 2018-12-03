@@ -5,9 +5,11 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -25,50 +27,64 @@ public class Vue extends Application  {
     public BorderPane border;
     public Scene scene;
 
+
     // Utilisé pour les animations car pas threadées
     public int compteur;
 
     // Pour les animations des monstres
     MonsterAnimatorFactory mstAnimFact = new MonsterAnimatorFactory();
 
+    // Thread pour model
+    Task<Void> task;
+
     public void setContent()
     {
         // gestion du placement (permet de placer le champ Text affichage en haut, et GridPane gPane au centre)
         border = new BorderPane();
+        border.setStyle("-fx-background-color: black");
 
         // permet de placer les diffrents boutons dans une grille
         gPane = new GridPane();
 
         border.setCenter(gPane);
 
+
+        BorderPane.setMargin(gPane, new Insets(100,100,0,125));
+
         scene = new Scene(border, Color.BLACK);
+    }
+
+    public class PacmanDirectionHandler implements EventHandler<KeyEvent>
+    {
+
+        @Override
+        public void handle(KeyEvent event) {
+            switch (event.getCode()) {
+                case RIGHT:
+                    m.pacman.setDir(Direction.RIGHT);
+                    break;
+
+                case LEFT:
+                    m.pacman.setDir(Direction.LEFT);
+                    break;
+
+                case UP:
+                    m.pacman.setDir(Direction.UP);
+                    break;
+
+                case DOWN:
+                    m.pacman.setDir(Direction.DOWN);
+                    break;
+            }
+        }
     }
 
     public void setEvent()
     {
         // Contrôle pour Pacman setOnKeyReleased
-        // On key pressed pour meilleur ergo
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke) {
-                switch (ke.getCode()) {
-                    case RIGHT:
-                        m.pacman.setDir(Direction.RIGHT);
-                        break;
-
-                    case LEFT:
-                        m.pacman.setDir(Direction.LEFT);
-                        break;
-
-                    case UP:
-                        m.pacman.setDir(Direction.UP);
-                        break;
-
-                    case DOWN:
-                        m.pacman.setDir(Direction.DOWN);
-                        break;
-                }
-            }
-        });
+        // On key pressed et Released pour meilleur ergo
+        scene.setOnKeyPressed(new PacmanDirectionHandler());
+        scene.setOnKeyReleased(new PacmanDirectionHandler());
 
     }
 
@@ -76,6 +92,25 @@ public class Vue extends Application  {
     @Override
     public void start(Stage primaryStage) {
 
+        StartScreen start_screen = new StartScreen();
+
+        start_screen.button.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                startGame(primaryStage);
+            }
+        });
+
+        primaryStage.setTitle("Pacman");
+        primaryStage.setScene(start_screen.scene);
+        primaryStage.setHeight(ConstantesVue.HEIGHT_STAGE);
+        primaryStage.setWidth(ConstantesVue.WIDTH_STAGE);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    public void startGame(Stage primaryStage)
+    {
         // Init
         setContent();
         m = new Model();
@@ -87,11 +122,11 @@ public class Vue extends Application  {
 
         afficherPlateau();
 
-        Task<Void> task = new Task<Void>() {
+        task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
 
-                while(m.getPacman().isAlive())
+                while(true)
                 {
                     m.run();
                     compteur += 1;
@@ -114,9 +149,7 @@ public class Vue extends Application  {
             }
         });
 
-        primaryStage.setTitle("Pacman");
         primaryStage.setScene(scene);
-        primaryStage.show();
 
         new Thread(task).start();
 
@@ -144,9 +177,12 @@ public class Vue extends Application  {
                     Node node = node  = CaseSpriteGenerator.getPassage();
                     if (c.isSuperGomme()) {
                         node = CaseSpriteGenerator.getSuperGomme();
+                        // On recentre la gomme dans la case
+                        GridPane.setMargin(node, new Insets(0,0,0,5));
                     }
                     else if (c.isGomme()) {
                         node = CaseSpriteGenerator.getGomme();
+                        GridPane.setMargin(node, new Insets(0,0,0,12));
                     }
                     else if (c.isMur()) {
                         node = CaseSpriteGenerator.getWall();
@@ -154,6 +190,7 @@ public class Vue extends Application  {
 
 
                     gPane.add(node, i, j);
+
                 }
             }
             for (Monster monster : monsters) {
@@ -166,8 +203,33 @@ public class Vue extends Application  {
         }
         else
         {
-            gPane.add(new Text("Fin de la partie"), m.plateau.nbColonnes/2, m.plateau.nbLignes/2);
+            endOfGame();
         }
+
+    }
+
+    public void endOfGame()
+    {
+        Stage primarystage = (Stage) scene.getWindow();
+        GameOver gameOver = new GameOver();
+
+        gameOver.replayButt.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                startGame(primarystage);
+            }
+        });
+
+        gameOver.quitButt.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Platform.exit();
+            }
+        });
+
+        // On arrête le thread du model
+        task.cancel();
+        primarystage.setScene(gameOver.scene);
 
     }
 
