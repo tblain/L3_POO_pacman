@@ -23,7 +23,10 @@ public class MonsterAnimatorFactory {
                 return this.shanim;
             case Speedy:
                 return this.spanim;
+            case Bashful:
+                return this.shanim;
         }
         return null;
     }
 }
+

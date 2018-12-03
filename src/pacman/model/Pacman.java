@@ -59,10 +59,10 @@ public class Pacman extends Movable {
             }
 
             // Si on peut manger un monster
-            if(monster != null)
+            if(monster != null && monster.alive)
             {
+                monster.remainingDeathTime = 10;
                 monster.alive = false;
-                this.monsters.remove(monster);
                 this.score += Constantes.POINT_ON_EAT_MONSTER;
             }
         }
