@@ -17,10 +17,13 @@ public class Model extends Observable implements Runnable{
         plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
         pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
-        Monster monster1 = new Monster(new Coordonnees(7, 4), plateau, MonsterName.Shadow, 1);
-        Monster monster2 = new Monster(new Coordonnees(13, 4), plateau, MonsterName.Pokey, 2);
-        Monster monster3 = new Monster(new Coordonnees(10, 7), plateau, MonsterName.Speedy, 3);
-        Monster monster4 = new Monster(new Coordonnees(11, 3), plateau, MonsterName.Bashful, 4);
+        Monster monster1 = new Monster(new Coordonnees(10, 8), this, MonsterName.Shadow, 1, 0, 0);
+        Monster monster2 = new Monster(new Coordonnees(9, 9), this, MonsterName.Pokey, 2, 15, 15 * Constantes.POINT_PAC_GOMME);
+        //Monster monster2 = new Monster(new Coordonnees(9, 9), this, MonsterName.Pokey, 2, 0, 0 * Constantes.POINT_PAC_GOMME);
+        Monster monster3 = new Monster(new Coordonnees(10, 9), this, MonsterName.Speedy, 3, 30, 30 * Constantes.POINT_PAC_GOMME);
+        //Monster monster3 = new Monster(new Coordonnees(10, 9), this, MonsterName.Speedy, 3, 0, 0 * Constantes.POINT_PAC_GOMME);
+        Monster monster4 = new Monster(new Coordonnees(11, 9), this, MonsterName.Bashful, 4, 45, 45 * Constantes.POINT_PAC_GOMME);
+        //Monster monster4 = new Monster(new Coordonnees(11, 9), this, MonsterName.Bashful, 4, 0, 0 * Constantes.POINT_PAC_GOMME);
 
         monster1.setDir(Direction.UP);
         monster2.setDir(Direction.UP);
@@ -46,22 +49,24 @@ public class Model extends Observable implements Runnable{
         if(pacman.alive)
         {
             int i = 1;
-            pacman.run();
+            System.out.println("\n=============== Nouveau Tour ===============\n");
             for(Monster mst : this.monsters)
             {
-                System.out.println("--------------------------------");
-                System.out.println("tour de m" + i++);
+                if(pacman.isAlive())
+                    //System.out.println("--------------------------------");
+                    System.out.println("tour de m" + i++);
                 mst.run();
             }
-
+            pacman.run();
             setChanged();
             notifyObservers();
 
             try {
-                TimeUnit.MILLISECONDS.sleep(175);
+                TimeUnit.MILLISECONDS.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            System.out.println("Fin de tour");
 
         }
     }

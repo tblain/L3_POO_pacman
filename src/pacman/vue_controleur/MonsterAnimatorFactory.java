@@ -6,11 +6,13 @@ public class MonsterAnimatorFactory {
     public PokeyAnimator pkanim;
     public ShadowAnimator shanim;
     public SpeedyAnimator spanim;
+    public BashfulAnimator baanim;
 
     public MonsterAnimatorFactory() {
         this.pkanim = new PokeyAnimator();
         this.shanim = new ShadowAnimator();
         this.spanim = new SpeedyAnimator();
+        this.baanim = new BashfulAnimator();
     }
 
     public MonsterAnimator getAnimatorOfMonster(MonsterName name)
@@ -24,7 +26,7 @@ public class MonsterAnimatorFactory {
             case Speedy:
                 return this.spanim;
             case Bashful:
-                return this.shanim;
+                return this.baanim;
         }
         return null;
     }

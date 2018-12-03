@@ -11,16 +11,18 @@ public class MonsterAnimator {
     public String RIGHT;
 
     public String SUPER_GOMME;
+    public String DEAD;
 
-    public MonsterAnimator(String DOWN, String UP, String LEFT, String RIGHT, String SUPER_GOMME) {
+    public MonsterAnimator(String DOWN, String UP, String LEFT, String RIGHT, String SUPER_GOMME, String DEAD) {
         this.DOWN = DOWN;
         this.UP = UP;
         this.LEFT = LEFT;
         this.RIGHT = RIGHT;
         this.SUPER_GOMME = SUPER_GOMME;
+        this.DEAD = DEAD;
     }
 
-    public ImageView getImageView(Direction dir, boolean supergomme)
+    public ImageView getImageView(Direction dir, boolean supergomme, boolean dead)
     {
         // DOWN par défaut
         String chosen = DOWN;
@@ -28,8 +30,9 @@ public class MonsterAnimator {
         if(supergomme)
         {
             chosen = SUPER_GOMME;
-        }
-        else
+        } else if(dead) {
+          chosen = DEAD;
+        } else
         {
             switch (dir)
             {
