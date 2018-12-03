@@ -48,16 +48,17 @@ public class Model extends Observable implements Runnable{
     public void run() {
         if(pacman.alive)
         {
+            pacman.run();
             int i = 1;
             System.out.println("\n=============== Nouveau Tour ===============\n");
             for(Monster mst : this.monsters)
             {
-                if(pacman.isAlive())
-                    //System.out.println("--------------------------------");
+                if(pacman.isAlive())//System.out.println("--------------------------------");
+                {
                     System.out.println("tour de m" + i++);
-                mst.run();
+                    mst.run();
+                }
             }
-            pacman.run();
             setChanged();
             notifyObservers();
 

@@ -54,17 +54,18 @@ public class Pacman extends Movable {
 
                     // Pour quitter la boucle si sur un monstre dans la même case
                     i = this.monsters.size();
+                    if(monster != null && monster.alive)
+                    {
+                        monster.remainingDeathTime = 10;
+                        monster.alive = false;
+                        this.score += Constantes.POINT_ON_EAT_MONSTER;
+                    }
                 }
                 i++;
             }
 
             // Si on peut manger un monster
-            if(monster != null && monster.alive)
-            {
-                monster.remainingDeathTime = 10;
-                monster.alive = false;
-                this.score += Constantes.POINT_ON_EAT_MONSTER;
-            }
+
         }
         // TODO
 
