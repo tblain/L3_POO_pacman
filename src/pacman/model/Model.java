@@ -35,9 +35,9 @@ public class Model extends Observable implements Runnable{
 
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
-        //monsters.add(monster2);
-        //monsters.add(monster3);
-        //monsters.add(monster4);
+        monsters.add(monster2);
+        monsters.add(monster3);
+        monsters.add(monster4);
 
         pacman.init(monsters, plateau);
 
