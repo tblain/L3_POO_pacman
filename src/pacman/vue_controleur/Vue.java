@@ -22,6 +22,7 @@ import javafx.stage.WindowEvent;
 import pacman.model.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class Vue extends Application  {
@@ -35,6 +36,8 @@ public class Vue extends Application  {
     public Label label_labelNiveau;
     public Label labelSuperGommeRestant;
     public Label label_labelSuperGommeRestant;
+
+    public Stage primaryStage;
 
 
     // Utilisé pour les animations car pas threadées
@@ -142,6 +145,7 @@ public class Vue extends Application  {
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
 
         StartScreen start_screen = new StartScreen();
 
@@ -175,7 +179,7 @@ public class Vue extends Application  {
             }
             else {
                 System.out.println("end of game");
-                endOfGame();
+                Platform.runLater(this::endOfGame);
             }
         });
 
@@ -255,6 +259,7 @@ public class Vue extends Application  {
             }
         }
         for (Monster monster : monsters) {
+
             gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(),pacman.getRemainingTimeForSuperPacGomme() != 0,!monster.isAlive())
                     , monster.getPos().getX(), monster.getPos().getY());
         }
@@ -265,13 +270,18 @@ public class Vue extends Application  {
 
     public void endOfGame()
     {
-        Stage primarystage = (Stage) scene.getWindow();
+        afficherPlateau();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         GameOver gameOver = new GameOver();
 
         gameOver.replayButt.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                startGame(primarystage);
+                startGame(primaryStage);
             }
         });
 
@@ -284,7 +294,7 @@ public class Vue extends Application  {
         });
         // On arrête le thread du model
         task.cancel();
-        primarystage.setScene(gameOver.scene);
+        this.primaryStage.setScene(gameOver.scene);
     }
 
 

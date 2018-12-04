@@ -17,7 +17,7 @@ public class Monster extends Movable {
 
     protected ArrayList<Monster> othersMonsters;
 
-    public synchronized void setRemainingDeathTime(int remainingDeathTime) {
+    public void setRemainingDeathTime(int remainingDeathTime) {
         this.remainingDeathTime = remainingDeathTime;
     }
 
@@ -422,6 +422,10 @@ public class Monster extends Movable {
         if(coord.getX() > 0)
             dir = Direction.RIGHT;
 
+        if(dir == null)
+        {
+            return this.dir;
+        }
         return dir;
     }
 
