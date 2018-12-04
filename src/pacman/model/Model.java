@@ -14,16 +14,18 @@ public class Model extends Observable implements Runnable{
 
     public Model() {
         // On init tout
+        pacman = new Pacman(new Coordonnees(10, 15));
+
+        init();
+    }
+
+    private void init() {
         plateau = Map1.getPlateau();
-        pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
         Monster monster1 = new Monster(new Coordonnees(10, 8), this, MonsterName.Shadow, 1, 0, 0);
         Monster monster2 = new Monster(new Coordonnees(9, 9), this, MonsterName.Pokey, 2, 15, 15 * Constantes.POINT_PAC_GOMME);
-        //Monster monster2 = new Monster(new Coordonnees(9, 9), this, MonsterName.Pokey, 2, 0, 0 * Constantes.POINT_PAC_GOMME);
         Monster monster3 = new Monster(new Coordonnees(10, 9), this, MonsterName.Speedy, 3, 30, 30 * Constantes.POINT_PAC_GOMME);
-        //Monster monster3 = new Monster(new Coordonnees(10, 9), this, MonsterName.Speedy, 3, 0, 0 * Constantes.POINT_PAC_GOMME);
         Monster monster4 = new Monster(new Coordonnees(11, 9), this, MonsterName.Bashful, 4, 45, 45 * Constantes.POINT_PAC_GOMME);
-        //Monster monster4 = new Monster(new Coordonnees(11, 9), this, MonsterName.Bashful, 4, 0, 0 * Constantes.POINT_PAC_GOMME);
 
         monster1.setDir(Direction.UP);
         monster2.setDir(Direction.UP);
@@ -33,21 +35,21 @@ public class Model extends Observable implements Runnable{
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
         monsters.add(monster2);
-        monsters.add(monster3);
-        monsters.add(monster4);
+        //monsters.add(monster3);
+        //monsters.add(monster4);
 
-        pacman.init(monsters);
+        pacman.init(monsters, plateau);
 
-        monster1.init(pacman, monsters);
-        monster2.init(pacman, monsters);
-        monster3.init(pacman, monsters);
-        monster4.init(pacman, monsters);
+        monster1.init(pacman, monsters, plateau);
+        monster2.init(pacman, monsters, plateau);
+        monster3.init(pacman, monsters, plateau);
+        monster4.init(pacman, monsters, plateau);
     }
 
     @Override
     public void run() {
-        if(pacman.alive)
-        {
+        if(pacman.alive) {
+
             pacman.run();
             int i = 1;
             System.out.println("\n=============== Nouveau Tour ===============\n");
@@ -59,6 +61,10 @@ public class Model extends Observable implements Runnable{
                     mst.run();
                 }
             }
+            if(!plateau.resteGomme()) {
+                init();
+            }
+
             setChanged();
             notifyObservers();
 
@@ -68,10 +74,8 @@ public class Model extends Observable implements Runnable{
                 e.printStackTrace();
             }
             System.out.println("Fin de tour");
-
         }
     }
-
 
     public Plateau getPlateau() { return plateau; }
 

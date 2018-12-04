@@ -16,16 +16,17 @@ public class Pacman extends Movable {
     protected int remainingTimeForSuperPacGomme;
 
 
-    public Pacman(Coordonnees pos, Plateau plateau)
+    public Pacman(Coordonnees pos)
     {
-        super(pos, plateau, Direction.LEFT);
+        super(pos, Direction.LEFT);
         this.remainingTimeForSuperPacGomme = 0;
         this.score = 0;
     }
 
-    public void init(ArrayList<Monster> monsters)
+    public void init(ArrayList<Monster> monsters, Plateau plateau)
     {
         this.monsters = monsters;
+        this.plateau = plateau;
     }
 
     @Override

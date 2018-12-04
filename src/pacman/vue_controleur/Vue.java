@@ -143,6 +143,7 @@ public class Vue extends Application  {
                 Platform.runLater(this::afficherPlateau);
             }
             else {
+                System.out.println("end of game");
                 endOfGame();
             }
         });
@@ -243,15 +244,14 @@ public class Vue extends Application  {
 
         gameOver.quitButt.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(MouseEvent event)
+            {
                 Platform.exit();
             }
         });
-
         // On arrête le thread du model
         task.cancel();
         primarystage.setScene(gameOver.scene);
-
     }
 
 

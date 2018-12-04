@@ -10,11 +10,10 @@ public abstract class Movable implements Runnable{
 
     protected Plateau plateau;
 
-    Movable(Coordonnees pos, Plateau plateau, Direction dir)
+    Movable(Coordonnees pos, Direction dir)
     {
         this.pos = pos;
         this.alive = true;
-        this.plateau = plateau;
         this.dir = dir;
     }
 

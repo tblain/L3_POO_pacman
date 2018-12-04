@@ -14,7 +14,6 @@ public class AbstractSearch {
     public boolean isInFear;
 
     public AbstractSearch(Plateau _p, SearchCoord _startCoord, SearchCoord _goalCoord, ArrayList<Monster> _mst, boolean _isInFear) {
-        //System.out.println("contruct");
         p = _p;
         startCoord = _startCoord;
         goalCoord = _goalCoord;
@@ -24,7 +23,6 @@ public class AbstractSearch {
     }
 
     protected void initSearch() {
-        //System.out.println("init");
         if (searchPath == null) {
             searchPath = new SearchCoord[1000];
             for (int i=0; i<1000; i++) {
@@ -34,7 +32,6 @@ public class AbstractSearch {
         pathCount = 0;
         currentCoord = startCoord;
         searchPath[pathCount++] = currentCoord;
-        //System.out.println("fin init");
     }
 
     public Plateau getPlateau() { return p; }

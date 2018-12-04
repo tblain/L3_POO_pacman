@@ -68,4 +68,19 @@ public class Plateau {
     {
         this.plateauTab[cas.coordonnees.getX()][cas.coordonnees.getY()] = cas;
     }
+
+    public boolean resteGomme() {
+        boolean resteGomme = false;
+
+        for(int x = 0; x < nbColonnes && !resteGomme; x++)
+        {
+            for(int y = 0; y < nbLignes && !resteGomme; y++)
+            {
+                if(getCase(x, y).isGomme() || getCase(x, y).isSuperGomme())
+                    resteGomme = true;
+            }
+        }
+
+        return resteGomme;
+    }
 }

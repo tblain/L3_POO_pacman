@@ -23,7 +23,7 @@ public class Monster extends Movable {
 
     public Monster(Coordonnees pos, Model model, MonsterName name, int num, int timeToAppear, int pointToAppear)
     {
-        super(pos, model.plateau, Direction.RIGHT);
+        super(pos, Direction.RIGHT);
         this.othersMonsters = new ArrayList<>();
         this.name = name;
         this.num = num;
@@ -32,8 +32,9 @@ public class Monster extends Movable {
         this.pointToAppear = pointToAppear;
     }
 
-    public void init(Pacman pacman, ArrayList<Monster> othersMonsters) {
+    public void init(Pacman pacman, ArrayList<Monster> othersMonsters, Plateau plateau) {
         this.pacman = pacman;
+        this.plateau = plateau;
 
         for(Monster mst : othersMonsters)
         {
@@ -445,15 +446,22 @@ public class Monster extends Movable {
         //System.out.println("Pathfinding x y");
         //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
         //System.out.println("goal pos x: " + x + " | y: " + y);
-        System.out.println("monster coord " + pos);
-        BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(x, y), othersMonsters, isInFear());
-        bfs.performBFS();
-        SearchCoord[] path = bfs.getPath();
-        //System.out.println("next coord " + path[path.length-2]);
-        //System.out.println("coord 1 " + path[1]);
-        //System.out.println("coord 0 " + path[0]);
+        //System.out.println("monster coord " + pos);
 
-        return path[path.length-1];
+        Coordonnees coordTest = new Coordonnees(x, y);
+
+        if (pos.equals(coordTest) && pos.distance(coordTest) == 1) {
+            return coordTest;
+        } else  {
+            BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(x, y), othersMonsters, isInFear());
+            bfs.performBFS();
+            SearchCoord[] path = bfs.getPath();
+            //System.out.println("next coord " + path[path.length-1]);
+            //System.out.println("coord 1 " + path[1]);
+            //System.out.println("coord 0 " + path[0]);
+
+            return path[path.length-1];
+        }
     }
 
     public Coordonnees pathFinding(Coordonnees coord) {
@@ -462,15 +470,21 @@ public class Monster extends Movable {
         //System.out.println("Pathfinding coord");
         //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
         //System.out.println("goal pos " + coord);
-        System.out.println("monster coord " + pos);
-        BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(coord.getX(), coord.getY()), othersMonsters, isInFear());
-        bfs.performBFS();
-        SearchCoord[] path = bfs.getPath();
-        //System.out.println("next coord " + path[path.length-2]);
-        //System.out.println("coord 1 " + path[1]);
-        //System.out.println("coord 0 " + path[0]);
+        //System.out.println("monster coord " + pos);
+        if(pos.equals(coord)) {
+            return pos;
+        } else if(pos.distance(coord) == 1) {
+            return coord;
+        } else {
+            BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(coord.getX(), coord.getY()), othersMonsters, isInFear());
+            bfs.performBFS();
+            SearchCoord[] path = bfs.getPath();
+            //System.out.println("next coord " + path[path.length-1]);
+            //System.out.println("coord 1 " + path[1]);
+            //System.out.println("coord 0 " + path[0]);
 
-        return path[path.length-1];
+            return path[path.length-1];
+        }
     }
 
     public boolean isInFear() {
@@ -512,11 +526,11 @@ public class Monster extends Movable {
         switch (num) {
             case 1:
                 if(gpx + 1 < 5 && !(posDiv[4][1] == 2 || posDiv[4][2] == 2)) {
-                    System.out.println("    droite" + gpx + " " + gpy);
+                    System.out.println("    droite " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx+1, gpy));
                 }
                 else if (gpy + 1 < 5 && !(posDiv[0][1] == 2 || posDiv[4][0] == 2 || posDiv[4][1] == 2 || posDiv[5][1] == 2)) {
-                    System.out.println("    bas" + gpx + " " + gpy);
+                    System.out.println("    bas " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx, gpy+1));
                 }
                 else
@@ -542,26 +556,26 @@ public class Monster extends Movable {
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx, gpy-1));
                 }
                 else if (gpx + 1 < 5 && !(posDiv[4][1] == 2 || posDiv[2][4] == 2)) {
-                    System.out.println("    droite" + gpx + " " + gpy);
+                    System.out.println("    droite " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx+1, gpy));
                 }
                 else {
-                    System.out.println("    straight" + gpx + " " + gpy);
+                    System.out.println("    straight " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx-1, gpy));
                 }
                 break;
 
             case 4:
                 if(gpy + 1 < 5 && !(posDiv[0][1] == 2 || posDiv[4][0] == 2 || posDiv[4][1] == 2)) {
-                    System.out.println("    bas" + gpx + " " + gpy);
+                    System.out.println("    bas " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx, gpy+1));
                 }
                 else if (gpx - 1 >= 0 && !(posDiv[1][1] == 2 || posDiv[1][2] == 2)) {
-                    System.out.println("    gauche" + gpx + " " + gpy);
+                    System.out.println("    gauche " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx-1, gpy));
                 }
                 else {
-                    System.out.println("    straight" + gpx + " " + gpy);
+                    System.out.println("    straight " + gpx + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx, gpy));
                 }
                 break;
