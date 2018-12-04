@@ -123,9 +123,6 @@ public class Monster extends Movable {
 
 
             } else { // if dead
-                //System.out.println("not alive" + remainingDeathTime);
-                //System.out.println("not alive" + remainingDeathTime);
-                //System.out.println("not alive" + remainingDeathTime);
                 Coordonnees coordToGo;
                 if(mx == 10 && my == 9) { // si le monstre est arrivé dans la maison
                     if (remainingDeathTime == 0) { // si son temps de réaparition est fini
@@ -175,11 +172,15 @@ public class Monster extends Movable {
 
     public boolean monstreLePlusLoin() {
         boolean plusLoin = true;
+
         for (Monster mst : othersMonsters){
             if (this.pos.distance(pacman.pos) < mst.pos.distance(pacman.pos))
                 plusLoin = false;
         }
 
+        if (othersMonsters.size() == 0) { // s'il n'y a pas d'autre monstres, il n'est pas le plus loin
+            plusLoin = false;
+        }
         return plusLoin;
     }
 
@@ -401,7 +402,7 @@ public class Monster extends Movable {
     {
         // On obtient un vecteur
         Coordonnees coord = new Coordonnees(in_coord.getX() - this.pos.getX(), in_coord.getY() - this.pos.getY());
-        Direction dir = null;
+        Direction dir = Direction.UP;
 
         // UP et DOWN sont inversés à cause des indexes du tableau de jeu
         // on monte avec index - 1 et descend avec index + 1
@@ -447,20 +448,20 @@ public class Monster extends Movable {
     public Coordonnees pathFinding(int x, int y) {
         // renvoie la case où aller aux coordonnées voulu
 
-        //System.out.println("Pathfinding x y");
-        //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
-        //System.out.println("goal pos x: " + x + " | y: " + y);
-        //System.out.println("monster coord " + pos);
+        System.out.println("Pathfinding x y");
+        System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
+        System.out.println("goal pos x: " + x + " | y: " + y);
+        System.out.println("monster coord " + pos);
 
         Coordonnees coordTest = new Coordonnees(x, y);
 
-        if (pos.equals(coordTest) && pos.distance(coordTest) == 1) {
+        if (pos.equals(coordTest) || pos.distance(coordTest) == 1) {
             return coordTest;
         } else  {
             BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(x, y), othersMonsters, isInFear());
             bfs.performBFS();
             SearchCoord[] path = bfs.getPath();
-            //System.out.println("next coord " + path[path.length-1]);
+            System.out.println("next coord " + path[path.length-1]);
 
             return path[path.length-1];
         }
@@ -469,19 +470,18 @@ public class Monster extends Movable {
     public Coordonnees pathFinding(Coordonnees coord) {
         // renvoie la case où aller aux coordonnées voulu
 
-        //System.out.println("Pathfinding coord");
-        //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
-        //System.out.println("goal pos " + coord);
-        //System.out.println("monster coord " + pos);
-        if(pos.equals(coord)) {
-            return pos;
-        } else if(pos.distance(coord) == 1) {
+        System.out.println("Pathfinding coord");
+        System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
+        System.out.println("goal pos " + coord);
+        System.out.println("monster coord " + pos);
+
+        if (pos.equals(coord) || pos.distance(coord) == 1) {
             return coord;
         } else {
             BFS bfs = new BFS(plateau, new SearchCoord(pos.getX(), pos.getY()), new SearchCoord(coord.getX(), coord.getY()), othersMonsters, isInFear());
             bfs.performBFS();
             SearchCoord[] path = bfs.getPath();
-            //System.out.println("next coord " + path[path.length-1]);
+            System.out.println("next coord " + path[path.length-1]);
 
             return path[path.length-1];
         }
@@ -540,7 +540,7 @@ public class Monster extends Movable {
         switch (num) {
             case 1:
                 if(gpx + 1 < 5 && !(posDiv[4][1] == 2 || posDiv[4][2] == 2)) {
-                    //System.out.println("    droite " + gpx + " " + gpy);
+                    System.out.println("    droite " + gpx+1 + " " + gpy);
                     coordToGo = pathFinding(coordPlusProcheDansCase(gpx+1, gpy));
                 }
                 else if (gpy + 1 < 5 && !(posDiv[0][1] == 2 || posDiv[4][0] == 2 || posDiv[4][1] == 2 || posDiv[5][1] == 2)) {
