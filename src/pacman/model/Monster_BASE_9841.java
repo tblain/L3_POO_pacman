@@ -3,29 +3,17 @@ package pacman.model;
 import java.util.ArrayList;
 
 public class Monster extends Movable {
+    private int pointToAppear;
     private Model model;
-<<<<<<< HEAD
-    protected Pacman pacman;
-    public MonsterName name;
-    public int num; // numero du monstre qui aura un comportement différent en fonction
-    public int mode = 1; // 0 : chase, 1 : surround
-    public int remainingDeathTime = 0; // temps avant que le monstre respawn à partir du moment où il est revenu dans la maison
-
-    // pour que le monstre apparaisse il faut que :
-    private int timeToAppear; // un certain temps se soit écoulé
-    private int pointToAppear; // ET que pacman ait atteint un certain score
-=======
-    // Temps pour apparaître
     private int timeToAppear;
     protected Pacman pacman;
     public MonsterName name;
     public int num;
     // 0 : chase, 1 : surround
     public int mode = 1;
-    // Temps avant de respawn
     public int remainingDeathTime = 0;
->>>>>>> origin/dev
 
+    // Savoir où ils sont pour ne pas aller sur les mêmes cases qu'eux
     protected ArrayList<Monster> othersMonsters;
 
     public synchronized void setRemainingDeathTime(int remainingDeathTime) {
@@ -61,19 +49,19 @@ public class Monster extends Movable {
 
         //System.out.println("alive : " + alive);
 
-        if (timeToAppear > 0 || pacman.score < pointToAppear) // est ce que le monstre réunis les conditions pour apparaitre
+        if (timeToAppear > 0 || pacman.score < pointToAppear)
             timeToAppear--;
         else {
-            if(isAlive()) { // si il est vivant
+            if(isAlive()) {
 
-                // On test si pacman est sur notre case et si le monstre n'est pas en mode peur(pacman mode supergomme), si oui on peut le manger
+                // On test si pacman est sur notre case, si oui on peut le manger
+                // ssi il n'est pas sous forme super gomme
                 if (pacman.pos.equals(this.pos) && !isInFear())
                     pacman.alive = false; // on mange le pacman
                 else {
 
                 }
-                if (isInFear()) {
-                    // les monstres se déplacent de façon random
+                if (isInFear()) { // les monstres se déplacent de façon random
                     Coordonnees coordToGo = randomAdjCoord(); // on recup une case adj au monstre random
                     if(plateau.getCase(coordToGo).isMur()) // si c'est un mur le monstre ne se déplace pas
                         this.dir = Direction.UP;
@@ -92,22 +80,23 @@ public class Monster extends Movable {
                     x = 0;
                     y = 0;
 
-                    // on divise le plateau en grands groupes de cases
-                    // longueur: 3, hauteur: 4
+                    int gmx = (mx - 2) / 3;
+                    int gmy = (my - 1) / 4;
 
-                    // groupe auquel appartient le montre
-                    int gmx = (mx-2)/3;
-                    int gmy = (my-1)/4;
+                    int gpx = (px - 2) / 3;
+                    int gpy = (py - 1) / 4;
 
-                    // groupe auquel appartient le pacman
-                    int gpx = (px-2)/3;
-                    int gpy = (py-1)/4;
+                    int[][] posDiv = new int[6][5];
 
-                    if (monstreLePlusLoin()) // le monstre le plus éloigné du pacman passe en mode surround
+                    for (Monster mst : othersMonsters) {
+                        posDiv[(mst.pos.getX() - 2) / 3][(mst.pos.getY() - 1) / 4] = 1;
+                    }
+
+                    posDiv[gpx][gpy] = 2;
+
+                    if (monstreLePlusLoin())
                         mode = 1;
                     else if (((gmx == gpx && (gmy == gpy || gmy == gpy + 1 || gmy == gpy - 1)) || (gmy == gpy & (gmx == gpx || gmx == gpx + 1 || gmx == gpx - 1))))
-                        // si le monstre est dans un groupe de cases adjacent à celui du pacman ou le meme groupe
-                        // il passe en mode chase (fonce sur le pacman)
                         mode = 0;
                     else
                         mode = 1;
@@ -116,13 +105,13 @@ public class Monster extends Movable {
                         coordToGo = surround();
                     } else if (mode == 0)
                         coordToGo = chase();
-                    //System.out.println("sdf*dsklflùdsfjslfjsmflksdmlfsdf");
+                    System.out.println("sdf*dsklflùdsfjslfjsmflksdmlfsdf");
                     // On met à jour notre position
                     if (coordToGo != null) {
                         //System.out.println("a des coord");
                         this.dir = this.getDirection(coordToGo);
                         this.pos = coordToGo;
-                        //System.out.println("dir :" + dir + " | pos : " + pos);
+                        System.out.println("dir :" + dir + " | pos : " + pos);
                     } else {
                         System.out.println("error : pas de next coord");
                     }
@@ -137,17 +126,17 @@ public class Monster extends Movable {
                 //System.out.println("not alive" + remainingDeathTime);
                 //System.out.println("not alive" + remainingDeathTime);
                 Coordonnees coordToGo;
-                if(mx == 10 && my == 9) { // si le monstre est arrivé dans la maison
-                    if (remainingDeathTime == 0) { // si son temps de réaparition est fini
+                if(mx == 10 && my == 9) {
+                    if (remainingDeathTime == 0) {
                         coordToGo = surround();
                         alive = true;
                         this.dir = this.getDirection(coordToGo);
                         this.pos = coordToGo;
-                    } else { // sinon il attend
+                    } else {
                         this.dir = Direction.UP;
                         remainingDeathTime--;
                     }
-                } else { // sinon il va vers la maison
+                } else {
                     coordToGo = pathFinding(10, 9);
                     this.dir = this.getDirection(coordToGo);
                     this.pos = coordToGo;
@@ -451,8 +440,6 @@ public class Monster extends Movable {
     }
 
     public Coordonnees pathFinding(int x, int y) {
-        // renvoie la case où aller aux coordonnées voulu
-
         //System.out.println("Pathfinding x y");
         //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
         //System.out.println("goal pos x: " + x + " | y: " + y);
@@ -468,8 +455,6 @@ public class Monster extends Movable {
     }
 
     public Coordonnees pathFinding(Coordonnees coord) {
-        // renvoie la case où aller aux coordonnées voulu
-
         //System.out.println("Pathfinding coord");
         //System.out.println("start pos x: " + pos.getX() + " | y: " + pos.getY());
         //System.out.println("goal pos " + coord);
@@ -480,7 +465,6 @@ public class Monster extends Movable {
         //System.out.println("next coord " + path[path.length-2]);
         //System.out.println("coord 1 " + path[1]);
         //System.out.println("coord 0 " + path[0]);
-
         return path[path.length-1];
     }
 
