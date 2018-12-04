@@ -24,6 +24,7 @@ public class AbstractSearch {
 
     protected void initSearch() {
         if (searchPath == null) {
+            // on initialise le tableau
             searchPath = new SearchCoord[1000];
             for (int i=0; i<1000; i++) {
                 searchPath[i] = new SearchCoord(0, 0);

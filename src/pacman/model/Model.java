@@ -11,6 +11,7 @@ public class Model extends Observable implements Runnable{
     public int score;
     public Pacman pacman;
     public ArrayList<Monster> monsters;
+    public int niveau = 1;
 
     public Model() {
         // On init tout
@@ -34,7 +35,7 @@ public class Model extends Observable implements Runnable{
 
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
-        monsters.add(monster2);
+        //monsters.add(monster2);
         //monsters.add(monster3);
         //monsters.add(monster4);
 
@@ -61,15 +62,17 @@ public class Model extends Observable implements Runnable{
                     mst.run();
                 }
             }
-            if(!plateau.resteGomme()) {
+
+            if(!plateau.resteGomme()) { // si il ne reste plus de gomme ou super gomme on réinitialise la map et les monstres
                 init();
+                niveau++;
             }
 
             setChanged();
             notifyObservers();
 
             try {
-                TimeUnit.MILLISECONDS.sleep(250);
+                TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

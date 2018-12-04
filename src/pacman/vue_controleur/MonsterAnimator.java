@@ -34,6 +34,7 @@ public class MonsterAnimator {
           chosen = DEAD;
         } else
         {
+            System.out.println("dir " + dir);
             switch (dir)
             {
                 case UP:

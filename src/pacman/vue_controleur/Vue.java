@@ -31,6 +31,10 @@ public class Vue extends Application  {
     public Scene scene;
     public Label labelScore;
     public Label label_labelScore;
+    public Label labelNiveau;
+    public Label label_labelNiveau;
+    public Label labelSuperGommeRestant;
+    public Label label_labelSuperGommeRestant;
 
 
     // Utilisé pour les animations car pas threadées
@@ -57,6 +61,7 @@ public class Vue extends Application  {
         HBox hb = new HBox();
         hb.setAlignment(Pos.TOP_LEFT);
 
+        // affichage pour le score
         labelScore = new Label();
         labelScore.setStyle("-fx-text-fill: white;-fx-font-size: 20");
 
@@ -68,6 +73,32 @@ public class Vue extends Application  {
 
         hb.getChildren().add(labelScore);
         HBox.setMargin(labelScore, new Insets(5,0,0,5));
+
+        // affichage pour le niveau
+        labelNiveau = new Label();
+        labelNiveau.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        label_labelNiveau = new Label("Niveau : ");
+        label_labelNiveau.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        hb.getChildren().add(label_labelNiveau);
+        HBox.setMargin(label_labelNiveau, new Insets(5,0,0,5));
+
+        hb.getChildren().add(labelNiveau);
+        HBox.setMargin(labelNiveau, new Insets(5,0,0,5));
+
+        // affichage pour le temps de super gomme restant
+        labelSuperGommeRestant = new Label();
+        labelSuperGommeRestant.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        label_labelSuperGommeRestant = new Label("Temps Super-Gomme Restant : ");
+        label_labelSuperGommeRestant.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        hb.getChildren().add(label_labelSuperGommeRestant);
+        HBox.setMargin(label_labelSuperGommeRestant, new Insets(5,0,0,5));
+
+        hb.getChildren().add(labelSuperGommeRestant);
+        HBox.setMargin(labelSuperGommeRestant, new Insets(5,0,0,5));
 
         border.setTop(hb);
 
@@ -196,6 +227,8 @@ public class Vue extends Application  {
 
         // On met à jour le score
         labelScore.setText(Integer.toString(pacman.getScore()));
+        labelNiveau.setText(Integer.toString(m.niveau));
+        labelSuperGommeRestant.setText(Integer.toString(pacman.getRemainingTimeForSuperPacGomme()));
 
         for (int i = 0; i < row; i++)
         {
