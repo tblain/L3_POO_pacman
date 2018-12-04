@@ -14,7 +14,7 @@ public class Model extends Observable implements Runnable{
 
     public Model() {
         // On init tout
-        plateau = new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN);
+        plateau = Map1.getPlateau();
         pacman = new Pacman(new Coordonnees(10, 15), plateau);
 
         Monster monster1 = new Monster(new Coordonnees(10, 8), this, MonsterName.Shadow, 1, 0, 0);

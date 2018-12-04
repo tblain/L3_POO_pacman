@@ -30,4 +30,22 @@ public class Map1 {
             {1, 1, 3, 3, 3, 3, 3, 3, 3, 3,  3,  3, 3, 3, 3, 3, 3, 3, 3, 1, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     };
+
+    public static  Plateau getPlateau()
+    {
+        return setTp(new Plateau(Map1.MAP, Map1.ROW, Map1.COLUMN));
+    }
+
+    private static Plateau setTp(Plateau plateau)
+    {
+        Coordonnees tpGauche = new Coordonnees(1,9);
+        Coordonnees tpDroite = new Coordonnees(19, 9);
+
+        Tp tp = new Tp(tpGauche, tpDroite);
+
+        plateau.getCase(tpGauche).setTp(tp);
+        plateau.getCase(tpDroite).setTp(tp);
+
+        return plateau;
+    }
 }

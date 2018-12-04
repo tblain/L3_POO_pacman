@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Monster extends Movable {
     private Model model;
-<<<<<<< HEAD
     protected Pacman pacman;
     public MonsterName name;
     public int num; // numero du monstre qui aura un comportement différent en fonction
@@ -14,17 +13,7 @@ public class Monster extends Movable {
     // pour que le monstre apparaisse il faut que :
     private int timeToAppear; // un certain temps se soit écoulé
     private int pointToAppear; // ET que pacman ait atteint un certain score
-=======
-    // Temps pour apparaître
-    private int timeToAppear;
-    protected Pacman pacman;
-    public MonsterName name;
-    public int num;
-    // 0 : chase, 1 : surround
-    public int mode = 1;
-    // Temps avant de respawn
-    public int remainingDeathTime = 0;
->>>>>>> origin/dev
+
 
     protected ArrayList<Monster> othersMonsters;
 

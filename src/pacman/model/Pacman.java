@@ -33,7 +33,7 @@ public class Pacman extends Movable {
     {
 
         // On récupère la case sur laquelle pacman est
-        Case cas = this.plateau.getCase(this.getPos());
+        Case currentCase = this.plateau.getCase(this.getPos());
 
         // On gére le temps restant pour le super pac gomme
         if(this.remainingTimeForSuperPacGomme > 0)
@@ -42,45 +42,43 @@ public class Pacman extends Movable {
         }
 
         // On gère le cas où on peut manger un Monster avant le déplacement
-        if(this.remainingTimeForSuperPacGomme > 0)
-        {
-
-            // Les monstres peuvent se stacker sur la même case donc on les parcours tous
-            for(Monster monster : monsters)
-            {
-                if(monster.pos.equals(this.getPos()) && monster.isAlive())
-                {
-                    monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
-                    monster.setAlive(false);
-                    this.score += Constantes.POINT_ON_EAT_MONSTER;
-                    System.out.println("BOOM one shot !!!!");
-                }
-            }
-        }
+        killMonster();
 
         // On gère le cas où on peut manger une gomme
-        if(cas.isGomme())
+        if(currentCase.isGomme())
         {
             this.score += Constantes.POINT_PAC_GOMME;
-            cas.setGomme(false);
+            currentCase.setGomme(false);
         }
 
         // On gère le cas où l'on peut manger une super gomme
-        if(cas.isSuperGomme())
+        if(currentCase.isSuperGomme())
         {
             this.remainingTimeForSuperPacGomme = Constantes.TIME_SUPER_PAC_GOMME;
-            cas.setSuperGomme(false);
+            currentCase.setSuperGomme(false);
         }
 
         // On met à jour la position si pas de mur devant nous
         Coordonnees nextMove = this.getNextPosition();
-        if(!this.plateau.getCase(nextMove).isMur())
+
+        if(currentCase.isTp())
         {
-            this.pos = nextMove;
+            this.pos = currentCase.teleportTo(currentCase.getCoordonnees());
+        }
+        else
+        {
+            if(!this.plateau.getCase(nextMove).isMur())
+            {
+                this.pos = nextMove;
+            }
         }
 
-
         // On gère le cas où on peut manger un Monster après le déplacement
+        killMonster();
+    }
+
+    public void killMonster()
+    {
         if(this.remainingTimeForSuperPacGomme > 0)
         {
 
