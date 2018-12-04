@@ -18,6 +18,11 @@ public abstract class Movable implements Runnable{
         this.dir = dir;
     }
 
+    public synchronized void setAlive(boolean alive)
+    {
+        this.alive = alive;
+    }
+
     public Coordonnees getPos() {
         return pos;
     }

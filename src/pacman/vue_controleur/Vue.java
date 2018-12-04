@@ -194,7 +194,7 @@ public class Vue extends Application  {
                 }
             }
             for (Monster monster : monsters) {
-                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(), pacman.getRemainingTimeForSuperPacGomme() != 0, !monster.isAlive())
+                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(),pacman.getRemainingTimeForSuperPacGomme() != 0,!monster.isAlive())
                         , monster.getPos().getX(), monster.getPos().getY());
             }
 

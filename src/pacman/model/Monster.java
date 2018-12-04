@@ -16,6 +16,10 @@ public class Monster extends Movable {
     // Savoir où ils sont pour ne pas aller sur les mêmes cases qu'eux
     protected ArrayList<Monster> othersMonsters;
 
+    public synchronized void setRemainingDeathTime(int remainingDeathTime) {
+        this.remainingDeathTime = remainingDeathTime;
+    }
+
     public Monster(Coordonnees pos, Model model, MonsterName name, int num, int timeToAppear, int pointToAppear)
     {
         super(pos, model.plateau, Direction.RIGHT);

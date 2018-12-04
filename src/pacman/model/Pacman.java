@@ -29,10 +29,11 @@ public class Pacman extends Movable {
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
 
         // On récupère la case sur laquelle pacman est
-        Case cas = this.plateau.getCase(this.pos);
+        Case cas = this.plateau.getCase(this.getPos());
 
         // On gére le temps restant pour le super pac gomme
         if(this.remainingTimeForSuperPacGomme > 0)
@@ -43,31 +44,21 @@ public class Pacman extends Movable {
         // On gère le cas où on peut manger un Monster
         if(this.remainingTimeForSuperPacGomme > 0)
         {
-            Monster monster = null;
-            int i = 0;
 
-            while(i < this.monsters.size())
+            // Les monstres peuvent se stacker sur la même case donc on les parcours tous
+            for(Monster monster : monsters)
             {
-                if(this.monsters.get(i).pos.equals(this.getPos()))
+                if(monster.pos.equals(this.getPos()))
                 {
-                    monster = this.monsters.get(i);
-
-                    // Pour quitter la boucle si sur un monstre dans la même case
-                    i = this.monsters.size();
-                    if(monster != null && monster.alive)
+                    if(monster.isAlive())
                     {
-                        monster.remainingDeathTime = 10;
-                        monster.alive = false;
+                        monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
+                        monster.setAlive(false);
                         this.score += Constantes.POINT_ON_EAT_MONSTER;
                     }
                 }
-                i++;
             }
-
-            // Si on peut manger un monster
-
         }
-        // TODO
 
         // On gère le cas où on peut manger une gomme
         if(cas.isGomme())
@@ -75,7 +66,6 @@ public class Pacman extends Movable {
             this.score += Constantes.POINT_PAC_GOMME;
             // On enlève la gomme
             cas.setGomme(false);
-            plateau.setCase(cas);
         }
 
         // On gère le cas où l'on peut manger une super gomme
@@ -83,7 +73,6 @@ public class Pacman extends Movable {
         {
             this.remainingTimeForSuperPacGomme = Constantes.TIME_SUPER_PAC_GOMME;
             cas.setSuperGomme(false);
-            plateau.setCase(cas);
         }
 
         // On met à jour la position si pas de mur devant nous
