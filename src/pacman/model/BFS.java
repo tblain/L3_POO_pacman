@@ -100,13 +100,11 @@ public class BFS extends AbstractSearch {
 
                     queue.sort(); // we sort the list with the closest searchCoord from the goal in first
 
-
                     listSearchCoord.clear();
-
                 }
             }
-            alreadyVisited.add(searchCoord);
 
+            alreadyVisited.add(searchCoord);
         }
 
         int i = 0;

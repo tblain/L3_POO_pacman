@@ -41,21 +41,19 @@ public class Pacman extends Movable {
             this.remainingTimeForSuperPacGomme--;
         }
 
-        // On gère le cas où on peut manger un Monster
+        // On gère le cas où on peut manger un Monster avant le déplacement
         if(this.remainingTimeForSuperPacGomme > 0)
         {
 
             // Les monstres peuvent se stacker sur la même case donc on les parcours tous
             for(Monster monster : monsters)
             {
-                if(monster.pos.equals(this.getPos()))
+                if(monster.pos.equals(this.getPos()) && monster.isAlive())
                 {
-                    if(monster.isAlive())
-                    {
-                        monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
-                        monster.setAlive(false);
-                        this.score += Constantes.POINT_ON_EAT_MONSTER;
-                    }
+                    monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
+                    monster.setAlive(false);
+                    this.score += Constantes.POINT_ON_EAT_MONSTER;
+                    System.out.println("BOOM one shot !!!!");
                 }
             }
         }
@@ -80,6 +78,24 @@ public class Pacman extends Movable {
         if(!this.plateau.getCase(nextMove).isMur())
         {
             this.pos = nextMove;
+        }
+
+
+        // On gère le cas où on peut manger un Monster après le déplacement
+        if(this.remainingTimeForSuperPacGomme > 0)
+        {
+
+            // Les monstres peuvent se stacker sur la même case donc on les parcours tous
+            for(Monster monster : monsters)
+            {
+                if(monster.pos.equals(this.getPos()) && monster.isAlive())
+                {
+                    monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
+                    monster.setAlive(false);
+                    this.score += Constantes.POINT_ON_EAT_MONSTER;
+                    System.out.println("BOOM one shot !!!!");
+                }
+            }
         }
     }
 
