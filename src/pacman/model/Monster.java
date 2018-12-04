@@ -5,12 +5,14 @@ import java.util.ArrayList;
 public class Monster extends Movable {
     private int pointToAppear;
     private Model model;
+    // Temps pour apparaître
     private int timeToAppear;
     protected Pacman pacman;
     public MonsterName name;
     public int num;
     // 0 : chase, 1 : surround
     public int mode = 1;
+    // Temps avant de respawn
     public int remainingDeathTime = 0;
 
     // Savoir où ils sont pour ne pas aller sur les mêmes cases qu'eux

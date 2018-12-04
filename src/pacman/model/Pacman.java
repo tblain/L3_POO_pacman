@@ -64,7 +64,6 @@ public class Pacman extends Movable {
         if(cas.isGomme())
         {
             this.score += Constantes.POINT_PAC_GOMME;
-            // On enlève la gomme
             cas.setGomme(false);
         }
 
@@ -98,5 +97,10 @@ public class Pacman extends Movable {
     public int getRemainingTimeForSuperPacGomme()
     {
         return this.remainingTimeForSuperPacGomme;
+    }
+
+    public int getScore()
+    {
+        return this.score;
     }
 }

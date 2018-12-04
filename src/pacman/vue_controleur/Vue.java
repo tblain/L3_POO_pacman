@@ -6,12 +6,15 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,6 +29,8 @@ public class Vue extends Application  {
     public GridPane gPane;
     public BorderPane border;
     public Scene scene;
+    public Label labelScore;
+    public Label label_labelScore;
 
 
     // Utilisé pour les animations car pas threadées
@@ -47,9 +52,24 @@ public class Vue extends Application  {
         gPane = new GridPane();
 
         border.setCenter(gPane);
-
-
         BorderPane.setMargin(gPane, new Insets(100,100,0,125));
+
+        HBox hb = new HBox();
+        hb.setAlignment(Pos.TOP_LEFT);
+
+        labelScore = new Label();
+        labelScore.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        label_labelScore = new Label("Score : ");
+        label_labelScore.setStyle("-fx-text-fill: white;-fx-font-size: 20");
+
+        hb.getChildren().add(label_labelScore);
+        HBox.setMargin(label_labelScore, new Insets(5,0,0,5));
+
+        hb.getChildren().add(labelScore);
+        HBox.setMargin(labelScore, new Insets(5,0,0,5));
+
+        border.setTop(hb);
 
         scene = new Scene(border, Color.BLACK);
     }
@@ -117,8 +137,15 @@ public class Vue extends Application  {
         setEvent();
         compteur = 1;
 
-        // la vue observe les "update" du "?", et réalise les mises à jour graphiques
-        m.addObserver((o, arg) -> Platform.runLater(this::afficherPlateau));
+        // la vue observe les "update" du "model", et réalise les mises à jour graphiques
+        m.addObserver((o, arg) -> {
+            if(m.pacman.isAlive()) {
+                Platform.runLater(this::afficherPlateau);
+            }
+            else {
+                endOfGame();
+            }
+        });
 
         afficherPlateau();
 
@@ -164,47 +191,41 @@ public class Vue extends Application  {
         Plateau p = m.getPlateau();
         Pacman pacman = m.getPacman();
         ArrayList<Monster> monsters = m.getMonsters();
-        // Un passage par défaut
 
 
-        if(pacman.isAlive())
+        // On met à jour le score
+        labelScore.setText(Integer.toString(pacman.getScore()));
+
+        for (int i = 0; i < row; i++)
         {
-            for (int i = 0; i < row; i++)
+            for (int j = 0; j < column; j++)
             {
-                for (int j = 0; j < column; j++)
-                {
-                    Case c = p.getCase(i, j);
-                    Node node = node  = CaseSpriteGenerator.getPassage();
-                    if (c.isSuperGomme()) {
-                        node = CaseSpriteGenerator.getSuperGomme();
-                        // On recentre la gomme dans la case
-                        GridPane.setMargin(node, new Insets(0,0,0,5));
-                    }
-                    else if (c.isGomme()) {
-                        node = CaseSpriteGenerator.getGomme();
-                        GridPane.setMargin(node, new Insets(0,0,0,12));
-                    }
-                    else if (c.isMur()) {
-                        node = CaseSpriteGenerator.getWall();
-                    }
-
-
-                    gPane.add(node, i, j);
-
+                Case c = p.getCase(i, j);
+                Node node = node  = CaseSpriteGenerator.getPassage();
+                if (c.isSuperGomme()) {
+                    node = CaseSpriteGenerator.getSuperGomme();
+                    // On recentre la gomme dans la case
+                    GridPane.setMargin(node, new Insets(0,0,0,5));
                 }
-            }
-            for (Monster monster : monsters) {
-                gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(),pacman.getRemainingTimeForSuperPacGomme() != 0,!monster.isAlive())
-                        , monster.getPos().getX(), monster.getPos().getY());
-            }
+                else if (c.isGomme()) {
+                    node = CaseSpriteGenerator.getGomme();
+                    GridPane.setMargin(node, new Insets(0,0,0,12));
+                }
+                else if (c.isMur()) {
+                    node = CaseSpriteGenerator.getWall();
+                }
 
-            gPane.add(PacmanAnimator.getImageView(pacman.getDir(),this.compteur % 2 == 0), pacman.getPos().getX(), pacman.getPos().getY());
 
+                gPane.add(node, i, j);
+
+            }
         }
-        else
-        {
-            endOfGame();
+        for (Monster monster : monsters) {
+            gPane.add(mstAnimFact.getAnimatorOfMonster(monster.name).getImageView(monster.getDir(),pacman.getRemainingTimeForSuperPacGomme() != 0,!monster.isAlive())
+                    , monster.getPos().getX(), monster.getPos().getY());
         }
+
+        gPane.add(PacmanAnimator.getImageView(pacman.getDir(),this.compteur % 2 == 0), pacman.getPos().getX(), pacman.getPos().getY());
 
     }
 
