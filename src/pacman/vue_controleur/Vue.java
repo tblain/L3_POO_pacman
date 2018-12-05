@@ -272,11 +272,11 @@ public class Vue extends Application  {
     {
         afficherPlateau();
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GameOver gameOver = new GameOver();
+        GameOver gameOver = new GameOver(m.pacman.getScore());
 
         gameOver.replayButt.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
