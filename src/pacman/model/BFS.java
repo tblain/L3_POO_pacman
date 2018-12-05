@@ -109,7 +109,7 @@ public class BFS extends AbstractSearch {
 
         int i = 0;
         if(searchCoord.equals(goalCoord)) { // if the last searchCoord is the goal
-            System.out.println("    loin");
+            //System.out.println("    loin");
             while(!searchCoord.equals(startCoord)) { // we start from the goal to the start
                 searchPath[i++] = searchCoord; // we add the predecessor of the current searchCoord to the array searchPath
                 searchCoord = searchCoord.predecessor; // then do the same for the predecessor
@@ -117,9 +117,9 @@ public class BFS extends AbstractSearch {
             }
             searchPath[i++] = searchCoord.predecessor;
             //this.maxDepth++;
-            System.out.println(searchCoord);
+            //System.out.println(searchCoord);
         } else {
-            System.out.println("same pos");
+            //System.out.println("same pos");
             searchPath[0] = startCoord;
             searchPath[1] = startCoord;
             searchPath[2] = startCoord;

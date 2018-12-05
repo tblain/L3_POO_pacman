@@ -35,9 +35,9 @@ public class Model extends Observable implements Runnable{
 
         monsters = new ArrayList<Monster>();
         monsters.add(monster1);
-        /*monsters.add(monster2);
+        monsters.add(monster2);
         monsters.add(monster3);
-        monsters.add(monster4);*/
+        monsters.add(monster4);
 
         pacman.init(monsters, plateau);
 
@@ -50,7 +50,6 @@ public class Model extends Observable implements Runnable{
     @Override
     public void run() {
         if(pacman.alive) {
-
             pacman.run();
             int i = 1;
             System.out.println("\n=============== Nouveau Tour ===============\n");

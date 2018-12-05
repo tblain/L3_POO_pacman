@@ -1,10 +1,5 @@
 package pacman.model;
 
-import pacman.model.Constantes;
-import pacman.model.Coordonnees;
-import pacman.model.Direction;
-import pacman.model.Monster;
-
 import java.util.ArrayList;
 
 public class Pacman extends Movable {
@@ -37,13 +32,10 @@ public class Pacman extends Movable {
         Case currentCase = this.plateau.getCase(this.getPos());
 
         // On gére le temps restant pour le super pac gomme
-        if(this.remainingTimeForSuperPacGomme > 0)
-        {
+        if(this.remainingTimeForSuperPacGomme > 0) {
             this.remainingTimeForSuperPacGomme--;
+            killMonsters(); // On gère le cas où on peut manger un Monster avant le déplacement
         }
-
-        // On gère le cas où on peut manger un Monster avant le déplacement
-        killMonster();
 
         // On gère le cas où on peut manger une gomme
         if(currentCase.isGomme())
@@ -74,25 +66,24 @@ public class Pacman extends Movable {
             }
         }
 
-        // On gère le cas où on peut manger un Monster après le déplacement
-        killMonster();
+        // On gére le temps restant pour le super pac gomme
+        if(this.remainingTimeForSuperPacGomme > 0) {
+            this.remainingTimeForSuperPacGomme--;
+            killMonsters(); // On gère le cas où on peut manger un Monster avant le déplacement
+        }
     }
 
-    public void killMonster()
+    public void killMonsters()
     {
-        if(this.remainingTimeForSuperPacGomme > 0)
+        // Les monstres peuvent se stacker sur la même case donc on les parcours tous
+        for(Monster monster : monsters)
         {
-
-            // Les monstres peuvent se stacker sur la même case donc on les parcours tous
-            for(Monster monster : monsters)
+            if(monster.pos.equals(this.getPos()) && monster.isAlive())
             {
-                if(monster.pos.equals(this.getPos()) && monster.isAlive())
-                {
-                    monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
-                    monster.setAlive(false);
-                    this.score += Constantes.POINT_ON_EAT_MONSTER;
-                    System.out.println("BOOM one shot !!!!");
-                }
+                monster.remainingDeathTime = Constantes.MONSTER_REMAINING_DEATH_TIME;
+                monster.setAlive(false);
+                this.score += Constantes.POINT_ON_EAT_MONSTER;
+                System.out.println("BOOM one shot !!!!");
             }
         }
     }
