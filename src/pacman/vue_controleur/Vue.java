@@ -221,8 +221,8 @@ public class Vue extends Application  {
     public void afficherPlateau() {
         gPane.getChildren().clear();
 
-        int column = Map1.COLUMN;
-        int row = Map1.ROW;
+        int column = m.plateau.getNbColonnes();
+        int row = m.plateau.getNbLignes();
 
         Plateau p = m.getPlateau();
         Pacman pacman = m.getPacman();

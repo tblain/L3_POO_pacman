@@ -21,7 +21,7 @@ public class Model extends Observable implements Runnable{
     }
 
     private void init() {
-        plateau = Map1.getPlateau();
+        plateau = new Plateau(new Map1());
 
         Monster monster1 = new Monster(new Coordonnees(10, 8), this, MonsterName.Shadow, 1, 0, 0);
         Monster monster2 = new Monster(new Coordonnees(9, 9), this, MonsterName.Pokey, 2, 15, 15 * Constantes.POINT_PAC_GOMME);

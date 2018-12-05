@@ -41,4 +41,11 @@ public class Tp {
         return exit;
     }
 
+    public Coordonnees getPointGauche() {
+        return pointGauche;
+    }
+
+    public Coordonnees getPointDroit() {
+        return pointDroit;
+    }
 }
